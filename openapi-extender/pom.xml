@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>springdoc-openapi-extender-parent</artifactId>
-        <groupId>co.rodnan</groupId>
+        <artifactId>openapi-extender-parent</artifactId>
+        <groupId>co.rodnansol</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>springdoc-openapi-extender</artifactId>
+    <artifactId>openapi-extender</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -19,8 +19,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>

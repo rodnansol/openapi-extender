@@ -4,13 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>co.rodnan</groupId>
-    <artifactId>springdoc-openapi-extender-parent</artifactId>
+    <groupId>co.rodnansol</groupId>
+    <artifactId>openapi-extender-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>springdoc-openapi-extender-test-tool</module>
-        <module>springdoc-openapi-extender</module>
+        <module>openapi-extender</module>
+        <module>openapi-extender-test-tool</module>
+        <module>openapi-extender-spring-test</module>
+        <module>openapi-extender-springdoc</module>
     </modules>
 
     <properties>
@@ -23,10 +25,29 @@
         <logback-classic.version>1.2.11</logback-classic.version>
         <slf4j-api.version>1.7.33</slf4j-api.version>
         <javax.servlet-api.version>4.0.0</javax.servlet-api.version>
+        <swagger-models.version>2.2.0</swagger-models.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>co.rodnansol</groupId>
+                <artifactId>openapi-extender-test-tool</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>co.rodnansol</groupId>
+                <artifactId>openapi-extender</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger-models.version}</version>
+                <scope>provided</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
@@ -42,6 +63,12 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
+                <version>${jackson-core.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
                 <version>${jackson-core.version}</version>
                 <scope>provided</scope>
             </dependency>
