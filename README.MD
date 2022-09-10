@@ -207,3 +207,190 @@ After running: `./mvnw package` the following generated classes will pop up:
   "cause" : "Cause it went bad"
 }
 ```
+
+<details>
+    <summary>Swagger UI Preview</summary>
+
+![swagger-ui-preview.png](docs/swagger-ui-preview.png)
+
+</details>
+
+<details>
+  <summary>Generated OpenAPI documentation</summary>
+
+```yaml
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /user:
+    get:
+      tags:
+      - user-controller
+      operationId: getUser
+      parameters:
+      - name: id
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Standard response:
+                  description: Standard response
+                  value: |-
+                    {
+                      "username" : "joe",
+                      "fullName" : "Joe Big"
+                    }
+            application/xml:
+              schema:
+                type: string
+              examples:
+                Standard response:
+                  description: Standard response
+                  value: |-
+                    {
+                      "username" : "joe",
+                      "fullName" : "Joe Big"
+                    }
+        "500":
+          content:
+            application/json:
+              examples:
+                When coupon code does not exist:
+                  description: When coupon code does not exist
+                  value: |-
+                    {
+                      "message" : "Internal Server Error BAD2",
+                      "cause" : "Bad because internal"
+                    }
+                When server explodes:
+                  description: When server explodes
+                  value: |-
+                    {
+                      "message" : "Internal Server Error BAD2",
+                      "cause" : "Bad because internal"
+                    }
+        "400":
+          content:
+            application/json:
+              examples:
+                When bad thing happens:
+                  description: When bad thing happens
+                  value: |-
+                    {
+                      "message" : "Bad BAD",
+                      "cause" : "Cause it went bad"
+                    }
+    post:
+      tags:
+      - user-controller
+      operationId: postUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+            examples:
+              Will throw error - Returns:422:
+                description: Will throw error - Returns:422
+                value: |-
+                  {
+                    "username" : "alex123",
+                    "password" : "password123",
+                    "passwordConfirmation" : "password12",
+                    "fullName" : "Alex King"
+                  }
+              Will throw error because user already exist - Returns:422:
+                description: Will throw error because user already exist - Returns:422
+                value: |-
+                  {
+                    "username" : "bob",
+                    "password" : "password123",
+                    "passwordConfirmation" : "password123",
+                    "fullName" : "Bob Sug"
+                  }
+              Creates a user - Returns:201:
+                description: Creates a user - Returns:201
+                value: |-
+                  {
+                    "username" : "new-bob",
+                    "password" : "password123",
+                    "passwordConfirmation" : "password123",
+                    "fullName" : "Bob Sug"
+                  }
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+        "201":
+          content:
+            application/json:
+              examples:
+                Successful operation:
+                  description: Successful operation
+                  value: |-
+                    {
+                      "username" : "joe",
+                      "fullName" : "Joe Big"
+                    }
+            application/xml:
+              examples:
+                Successful operation:
+                  description: Successful operation
+                  value: |
+                    <LinkedHashMap>
+                      <username>joe</username>
+                      <fullName>Joe Big</fullName>
+                    </LinkedHashMap>
+        "422":
+          content:
+            application/json:
+              examples:
+                When passwords does not match:
+                  description: When passwords does not match
+                  value: |-
+                    {
+                      "message" : "Passwords must match",
+                      "cause" : "Cause it went bad"
+                    }
+                When username already exist:
+                  description: When username already exist
+                  value: |-
+                    {
+                      "message" : "Username already exists",
+                      "cause" : "Cause it went bad"
+                    }
+components:
+  schemas:
+    UserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        passwordConfirmation:
+          type: string
+        fullName:
+          type: string
+```
+</details>
