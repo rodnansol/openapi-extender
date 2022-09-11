@@ -1,4 +1,4 @@
-package co.rodnansol;
+package org.rodnansol;
 
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.examples.Example;
@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static co.rodnansol.IOUtils.MEDIA_TYPE;
-import static co.rodnansol.IOUtils.copy;
+import static org.rodnansol.IOUtils.MEDIA_TYPE;
+import static org.rodnansol.IOUtils.copy;
 
 /**
  *

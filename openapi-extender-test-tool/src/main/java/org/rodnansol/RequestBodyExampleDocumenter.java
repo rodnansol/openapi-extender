@@ -1,7 +1,5 @@
-package co.rodnansol;
+package org.rodnansol;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-class ApiResponseExampleDocumenter {
+class RequestBodyExampleDocumenter {
 
     private static final Map<String, String> MEDIA_TYPE;
 
@@ -23,19 +21,16 @@ class ApiResponseExampleDocumenter {
         MEDIA_TYPE.put("application/xml", ".xml");
     }
 
-    private static final String OPENAPI_EXTENDER_RESPONSES_FOLDER = "openapi-extender/responses/";
-
-    static final String DEFAULT_OUTPUT_DIRECTORY = "target/classes/" + OPENAPI_EXTENDER_RESPONSES_FOLDER;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApiResponseExampleDocumenter.class);
-
+    private static final String OPENAPI_EXTENDER_REQUEST_FOLDER = "openapi-extender/requests/";
+    static final String DEFAULT_OUTPUT_DIRECTORY = "target/classes/" + OPENAPI_EXTENDER_REQUEST_FOLDER;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestBodyExampleDocumenter.class);
     private final String outputDirectory;
 
-    public ApiResponseExampleDocumenter() {
+    public RequestBodyExampleDocumenter() {
         this(DEFAULT_OUTPUT_DIRECTORY);
     }
 
-    public ApiResponseExampleDocumenter(String outputDirectory) {
+    public RequestBodyExampleDocumenter(String outputDirectory) {
         this.outputDirectory = outputDirectory;
     }
 
@@ -56,7 +51,7 @@ class ApiResponseExampleDocumenter {
         if (!file.toFile().exists()) {
             file = Files.createFile(file);
         }
-        FileWriter.INSTANCE.writeToFile(file,content,contentType);
+        FileWriter.INSTANCE.writeToFile(file, content, contentType);
     }
 
     private String createAggregatorFile(String operation, String description, int status, String contentType) {

@@ -1,4 +1,4 @@
-package co.rodnansol;
+package org.rodnansol;
 
 import java.io.IOException;
 import java.io.InputStream;

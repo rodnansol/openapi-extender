@@ -1,7 +1,7 @@
 package com.example.springbootopenmapiwithtest;
 
-import co.rodnansol.ApiResponseDocumentReporter;
-import co.rodnansol.RequestBodyDocumentReporter;
+import org.rodnansol.ApiResponseDocumentReporter;
+import org.rodnansol.RequestBodyDocumentReporter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>openapi-extender-parent</artifactId>
-        <groupId>co.rodnansol</groupId>
+        <groupId>org.rodnansol</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -23,7 +23,7 @@
             <artifactId>spring-test</artifactId>
         </dependency>
         <dependency>
-            <groupId>co.rodnansol</groupId>
+            <groupId>org.rodnansol</groupId>
             <artifactId>openapi-extender-test-tool</artifactId>
             <scope>compile</scope>
         </dependency>
