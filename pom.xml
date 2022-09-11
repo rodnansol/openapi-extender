@@ -63,8 +63,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:ssh://git@github.com:rodnansol/openapi-extender.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:rodnansol/openapi-extender.git</developerConnection>
+        <connection>scm:git:git@github.com:rodnansol/openapi-extender.git</connection>
+        <developerConnection>scm:git:git@github.com:rodnansol/openapi-extender.git</developerConnection>
         <url>https://github.com/rodnansol/openapi-extender</url>
     </scm>
     <!--End Release Stuff-->
