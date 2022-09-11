@@ -54,7 +54,7 @@ class ApiResponseExampleDocumenter {
         if (!file.toFile().exists()) {
             file = Files.createFile(file);
         }
-        FileWriter.INSTANCE.writeToFile(file,content,contentType);
+        FileWriter.INSTANCE.writeToFile(file, content, contentType);
     }
 
     private String createAggregatorFile(String operation, String description, int status, String contentType) {

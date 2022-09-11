@@ -17,7 +17,6 @@ import java.util.List;
 public class ApiResponseAndExampleCustomizer implements OperationCustomizer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiResponseAndExampleCustomizer.class);
-
     private static final List<OperationExtenderAction> HANDLERS = new LinkedList<>();
 
     public ApiResponseAndExampleCustomizer() {
@@ -29,6 +28,11 @@ public class ApiResponseAndExampleCustomizer implements OperationCustomizer {
         HANDLERS.add(new ResponseExampleOperationExtenderAction(responseExamplePath));
     }
 
+    /**
+     * @param operation     input operation
+     * @param handlerMethod original handler method
+     * @return
+     */
     @Override
     public Operation customize(Operation operation, HandlerMethod handlerMethod) {
         String operationId = operation.getOperationId();
@@ -36,7 +40,7 @@ public class ApiResponseAndExampleCustomizer implements OperationCustomizer {
 
         HANDLERS.forEach(operationExtenderAction -> {
             try {
-                URL resource = getClass().getClassLoader().getResource(operationExtenderAction.workingDirectory() + operationId);
+                URL resource = getResourcesFolder(operationId, operationExtenderAction);
                 if (resource == null) {
                     LOGGER.debug("No resource for operation:[{}]", operation);
                     return;
@@ -55,6 +59,10 @@ public class ApiResponseAndExampleCustomizer implements OperationCustomizer {
         });
 
         return operation;
+    }
+
+    private URL getResourcesFolder(String operationId, OperationExtenderAction operationExtenderAction) {
+        return getClass().getClassLoader().getResource(operationExtenderAction.workingDirectory() + operationId);
     }
 
 }

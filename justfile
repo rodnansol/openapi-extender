@@ -1,8 +1,15 @@
 #!/usr/bin/env just --justfile
 
-# maven build without tests
-build-all:
-   mvn -DskipTests clean package
+# Build project
+build-project:
+  ./mvnw clean install
+
+# Build samples
+build-samples:
+  ./mvnw clean package -f samples/spring-boot-openmapi-with-test/pom.xml -X
+
+# Build everything
+build-all: build-project build-samples
 
 # dependencies tree for compile
 dependencies:
