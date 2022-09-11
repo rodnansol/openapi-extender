@@ -23,6 +23,6 @@ jobs:
         with:
           java-version: 8
           distribution: temurin
-          cache: gradle
+          cache: maven
       - name: build-project
         run: ./mvnw clean verify
