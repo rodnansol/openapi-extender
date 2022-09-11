@@ -5,7 +5,7 @@
     <groupId>org.rodnansol</groupId>
     <artifactId>openapi-extender-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
     <modules>
         <module>openapi-extender</module>
         <module>openapi-extender-resource-generator</module>
@@ -64,7 +64,7 @@
         <connection>scm:git:git@github.com:rodnansol/openapi-extender.git</connection>
         <developerConnection>scm:git:git@github.com:rodnansol/openapi-extender.git</developerConnection>
         <url>https://github.com/rodnansol/openapi-extender</url>
-      <tag>openapi-extender-parent-0.1.0</tag>
+      <tag>HEAD</tag>
   </scm>
     <!--End Release Stuff-->
     <dependencyManagement>
