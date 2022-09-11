@@ -1,5 +1,7 @@
 # OpenAPI Extender
 
+![banner.png](banner.png)
+
 ## Motivation
 
 Writing proper OpenAPI documentations are time consuming, if you really want to make sure your clients are understanding the API itself, massive amount of summaries and examples should be provided, not mandatory, but if you are on the other side of
@@ -25,6 +27,10 @@ The project is split up into multiple modules to make sure the end users are not
 - [openapi-extender-springdoc](openapi-extender-springdoc) - SpringDoc extension
 
 ## Usage
+
+<details>
+
+    <summary>Spring Boot based example</summary>
 
 ```java
 
@@ -207,6 +213,8 @@ After running: `./mvnw package` the following generated classes will pop up:
   "cause" : "Cause it went bad"
 }
 ```
+
+</details>
 
 <details>
     <summary>Swagger UI Preview</summary>
