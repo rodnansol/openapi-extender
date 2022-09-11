@@ -29,7 +29,6 @@ The project is split up into multiple modules to make sure the end users are not
 ## Usage
 
 <details>
-
     <summary>Spring Boot based example</summary>
 
 ```java
