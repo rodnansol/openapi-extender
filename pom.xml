@@ -7,7 +7,7 @@
     <groupId>org.rodnansol</groupId>
     <artifactId>openapi-extender-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <modules>
         <module>openapi-extender</module>
         <module>openapi-extender-resource-generator</module>
