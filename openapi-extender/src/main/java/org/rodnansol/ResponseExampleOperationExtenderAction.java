@@ -9,29 +9,37 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.function.BiConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.rodnansol.IOUtils.MEDIA_TYPE;
-import static org.rodnansol.IOUtils.copy;
 
 /**
  *
  */
-final class ResponseExampleOperationExtenderAction implements OperationExtenderAction {
+public final class ResponseExampleOperationExtenderAction implements OperationExtenderAction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResponseExampleOperationExtenderAction.class);
 
     private static final Pattern RESPONSE_EXAMPLE = Pattern.compile("(\\d+)_(.*).(json|xml)");
+    private static final BiConsumer<Example, ResponseMatcherResult> DEFAULT_CUSTOMIZER = (example, matcherResult) -> {
+        example.setDescription(matcherResult.getDescription());
+        example.setValue(matcherResult.getExampleContent());
+    };
 
     private final String workingDirectory;
+    private final BiConsumer<Example, ResponseMatcherResult> customizer;
 
     public ResponseExampleOperationExtenderAction(String workingDirectory) {
+        this(workingDirectory, DEFAULT_CUSTOMIZER);
+    }
+
+    public ResponseExampleOperationExtenderAction(String workingDirectory, BiConsumer<Example, ResponseMatcherResult> customizer) {
         this.workingDirectory = workingDirectory;
+        this.customizer = customizer;
         LOGGER.debug("Using [{}] directory for responses", workingDirectory);
     }
 
@@ -39,33 +47,37 @@ final class ResponseExampleOperationExtenderAction implements OperationExtenderA
     public void extendWith(final Operation operation, File file) {
         String fileName = file.getName();
         Matcher responseExampleMatcher = RESPONSE_EXAMPLE.matcher(fileName);
+
         if (responseExampleMatcher.matches()) {
-            String statusCode = responseExampleMatcher.group(1);
-            String description = responseExampleMatcher.group(2);
-            String fileExtension = responseExampleMatcher.group(3);
-            ApiResponses responses = operation.getResponses();
-            ApiResponse apiResponse = responses.getOrDefault(statusCode, new ApiResponse());
-            if (!responses.containsKey(statusCode)) {
-                responses.addApiResponse(statusCode, apiResponse);
-            }
-            Content content = apiResponse.getContent() == null ? new Content() : apiResponse.getContent();
-            apiResponse.setContent(content);
-            String rawMediaType = MEDIA_TYPE.get(fileExtension);
-            MediaType mediaType = content.getOrDefault(rawMediaType, new MediaType());
-            if (!content.containsKey(rawMediaType)) {
-                content.addMediaType(rawMediaType, mediaType);
-            }
+            ResponseMatcherResult responseMatcherResult;
             try {
-                ByteArrayOutputStream output = new ByteArrayOutputStream();
-                copy(new FileInputStream(file), output);
-                Example example = new Example();
-                example.setDescription(description);
-                example.setValue(output.toString());
-                mediaType.addExamples(description, example);
+                responseMatcherResult = new ResponseMatcherResult(responseExampleMatcher, file);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new ExtenderActionException("Error during matching file", e);
             }
+            extendWith(operation, responseMatcherResult);
         }
+
+    }
+
+    public void extendWith(Operation operation, ResponseMatcherResult responseMatcherResult) {
+        String statusCode = responseMatcherResult.getStatusCode();
+        ApiResponses responses = operation.getResponses() == null ? new ApiResponses() : operation.getResponses();
+        operation.setResponses(responses);
+        ApiResponse apiResponse = responses.getOrDefault(statusCode, new ApiResponse());
+        if (!responses.containsKey(statusCode)) {
+            responses.addApiResponse(statusCode, apiResponse);
+        }
+        Content content = apiResponse.getContent() == null ? new Content() : apiResponse.getContent();
+        apiResponse.setContent(content);
+        String rawMediaType = MEDIA_TYPE.get(responseMatcherResult.getExtension());
+        MediaType mediaType = content.getOrDefault(rawMediaType, new MediaType());
+        if (!content.containsKey(rawMediaType)) {
+            content.addMediaType(rawMediaType, mediaType);
+        }
+        Example example = new Example();
+        customizer.accept(example, responseMatcherResult);
+        mediaType.addExamples(example.getDescription(), example);
     }
 
     @Override
