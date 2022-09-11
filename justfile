@@ -1,4 +1,8 @@
 #!/usr/bin/env just --justfile
+set export
+
+home_dir  := env_var('HOME')
+JAVA_HOME := home_dir + "/.sdkman/candidates/java/current"
 
 # Build project
 build-project:
@@ -17,4 +21,10 @@ dependencies:
 
 # display updates
 updates:
-  mvn versions:display-dependency-updates > updates.txt    
+  mvn versions:display-dependency-updates > updates.txt
+
+release:
+  mvn -Prelease clean verify deploy
+
+jrelease:
+  mvn -Prelease clean verify jreleaser:full-release deploy
