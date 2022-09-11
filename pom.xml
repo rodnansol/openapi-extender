@@ -37,6 +37,7 @@
         <editorconfig-maven-plugin.version>0.1.1</editorconfig-maven-plugin.version>
         <jreleaser-maven-plugin.version>1.1.0</jreleaser-maven-plugin.version>
         <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
+        <maven-release-plugin.version>3.0.0-M6</maven-release-plugin.version>
     </properties>
 
     <!--Release Stuff-->
@@ -192,6 +193,11 @@
                     <artifactId>git-build-hook-maven-plugin</artifactId>
                     <version>${git-build-hook-maven-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven-release-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -260,6 +266,15 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <configuration>
+                            <tagNameFormat>@{project.version}</tagNameFormat>
+                            <preparationGoals>jreleaser:release</preparationGoals>
+                            <scmCommentPrefix>release:</scmCommentPrefix>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <groupId>org.jreleaser</groupId>
                         <artifactId>jreleaser-maven-plugin</artifactId>
                         <configuration>
@@ -276,13 +291,13 @@
                                         May define a `JRELEASER_TAG_NAME` environment variable instead.
                                         If left unspecified, will use `v{{projectVersion}}`.
                                         -->
-                                        <tagName>v1.0.0</tagName>
+<!--                                        <tagName>v1.0.0</tagName>-->
                                         <!--
                                           The tag to compare against the release tag. Is used to fetch all commits between those tags.
                                           May define a `JRELEASER_PREVIOUS_TAG_NAME` environment variable instead.
                                           If left unspecified, will use the previous logical tag of `tagName`.
                                         -->
-                                        <previousTagName>v0.9.0</previousTagName>
+<!--                                        <previousTagName>v0.9.0</previousTagName>-->
                                         <overwrite>true</overwrite>
                                         <changelog>
                                             <formatted>ALWAYS</formatted>
