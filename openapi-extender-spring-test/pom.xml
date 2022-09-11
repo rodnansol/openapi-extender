@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>org.rodnansol</groupId>
-            <artifactId>openapi-extender-test-tool</artifactId>
+            <artifactId>openapi-extender-resource-generator</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>

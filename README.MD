@@ -22,7 +22,7 @@ happens sometimes that they are not giving out these tests, because of course se
 The project is split up into multiple modules to make sure the end users are not depending on some unnecessary dependencies:
 
 - [openapi-extender](openapi-extender) - Core part, that does the "heavy-lifting" that works with the OpenAPI model classes
-- [openapi-extender-test-tool](openapi-extender-test-tool) - Testing tool module that is working with the contents of the test results
+- [openapi-extender-resource-generator](openapi-extender-resource-generator) - Resource generator module that is generating the resource files based on different content
 - [openapi-extender-spring-test](openapi-extender-spring-test) - Spring Test extension
 - [openapi-extender-springdoc](openapi-extender-springdoc) - SpringDoc extension
 

@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>openapi-extender</module>
-        <module>openapi-extender-test-tool</module>
+        <module>openapi-extender-resource-generator</module>
         <module>openapi-extender-spring-test</module>
         <module>openapi-extender-springdoc</module>
     </modules>
@@ -72,7 +72,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.rodnansol</groupId>
-                <artifactId>openapi-extender-test-tool</artifactId>
+                <artifactId>openapi-extender-resource-generator</artifactId>
                 <version>${project.version}</version>
                 <scope>provided</scope>
             </dependency>

@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>openapi-extender-test-tool</artifactId>
-    <name>OpenAPI Extender - Generator</name>
+    <artifactId>openapi-extender-resource-generator</artifactId>
+    <name>OpenAPI Extender - Resource Generator</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
