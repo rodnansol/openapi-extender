@@ -36,6 +36,7 @@
         <junit-jupiter-params.version>5.8.1</junit-jupiter-params.version>
         <editorconfig-maven-plugin.version>0.1.1</editorconfig-maven-plugin.version>
         <jreleaser-maven-plugin.version>1.1.0</jreleaser-maven-plugin.version>
+        <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
     </properties>
 
     <!--Release Stuff-->
@@ -64,8 +65,8 @@
         <connection>scm:git:git@github.com:rodnansol/openapi-extender.git</connection>
         <developerConnection>scm:git:git@github.com:rodnansol/openapi-extender.git</developerConnection>
         <url>https://github.com/rodnansol/openapi-extender</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
     <!--End Release Stuff-->
     <dependencyManagement>
         <dependencies>
@@ -186,6 +187,11 @@
                     <artifactId>jreleaser-maven-plugin</artifactId>
                     <version>${jreleaser-maven-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>com.rudikershaw.gitbuildhook</groupId>
+                    <artifactId>git-build-hook-maven-plugin</artifactId>
+                    <version>${git-build-hook-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -206,6 +212,24 @@
                         <phase>verify</phase>
                         <goals>
                             <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.rudikershaw.gitbuildhook</groupId>
+                <artifactId>git-build-hook-maven-plugin</artifactId>
+                <configuration>
+                    <installHooks>
+                        <commit-msg>hooks/commit-msg</commit-msg>
+                    </installHooks>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-hooks</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>install</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -245,8 +269,20 @@
                                 </signing>
                                 <release>
                                     <github>
-                                        <tagName>${project.version}</tagName>
-                                        <releaseName>${project.version}</releaseName>
+                                        <skipTag>true</skipTag>
+                                        <releaseName>Release ${project.version}</releaseName>
+                                        <!--
+                                        The tag associated with the release.
+                                        May define a `JRELEASER_TAG_NAME` environment variable instead.
+                                        If left unspecified, will use `v{{projectVersion}}`.
+                                        -->
+                                        <tagName>v1.0.0</tagName>
+                                        <!--
+                                          The tag to compare against the release tag. Is used to fetch all commits between those tags.
+                                          May define a `JRELEASER_PREVIOUS_TAG_NAME` environment variable instead.
+                                          If left unspecified, will use the previous logical tag of `tagName`.
+                                        -->
+                                        <previousTagName>v0.9.0</previousTagName>
                                         <overwrite>true</overwrite>
                                         <changelog>
                                             <formatted>ALWAYS</formatted>

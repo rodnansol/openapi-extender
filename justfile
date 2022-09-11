@@ -23,8 +23,13 @@ dependencies:
 updates:
   mvn versions:display-dependency-updates > updates.txt
 
-release:
+deploy-to-ossrh:
   mvn -Prelease clean verify deploy
 
+full-release:
+  mvn release:prepare release:perform -Prelease -DreleaseVersion=0.1.1 -DdevelopmentVersion=0.1.2-SNAPSHOT
+
 jrelease:
-  mvn -Prelease clean verify jreleaser:full-release deploy
+  mvn versions:set -DnewVersion=0.1.0
+  mvn -Prelease jreleaser:release
+  mvn versions:set -DnewVersion=0.1.1-SNAPSHOT
