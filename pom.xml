@@ -263,75 +263,75 @@
                                         </changelog>
                                     </github>
                                 </release>
-<!--                                <distributions>-->
-<!--                                    <openapi-extender-springdoc>-->
-<!--                                        <active>ALWAYS</active>-->
-<!--                                        <type>SINGLE_JAR</type>-->
-<!--                                        <artifacts>-->
-<!--                                            <artifact>-->
-<!--                                                <path>openapi-extender-springdoc/target/openapi-extender-springdoc-${project.version}.jar</path>-->
-<!--                                            </artifact>-->
-<!--                                        </artifacts>-->
-<!--                                    </openapi-extender-springdoc>-->
-<!--                                    <openapi-extender-spring-test>-->
-<!--                                        <active>ALWAYS</active>-->
-<!--                                        <type>SINGLE_JAR</type>-->
-<!--                                        <artifacts>-->
-<!--                                            <artifact>-->
-<!--                                                <path>openapi-extender-spring-test/target/openapi-extender-spring-test-${project.version}.jar</path>-->
-<!--                                            </artifact>-->
-<!--                                        </artifacts>-->
-<!--                                    </openapi-extender-spring-test>-->
-<!--                                    <openapi-extender-resource-generator>-->
-<!--                                        <active>ALWAYS</active>-->
-<!--                                        <type>SINGLE_JAR</type>-->
-<!--                                        <artifacts>-->
-<!--                                            <artifact>-->
-<!--                                                <path>openapi-extender-resource-generator/target/openapi-extender-resource-generator-${project.version}.jar</path>-->
-<!--                                            </artifact>-->
-<!--                                        </artifacts>-->
-<!--                                    </openapi-extender-resource-generator>-->
-<!--                                    <openapi-extender>-->
-<!--                                        <active>ALWAYS</active>-->
-<!--                                        <type>SINGLE_JAR</type>-->
-<!--                                        <artifacts>-->
-<!--                                            <artifact>-->
-<!--                                                <path>openapi-extender/target/openapi-extender-${project.version}.jar</path>-->
-<!--                                            </artifact>-->
-<!--                                        </artifacts>-->
-<!--                                    </openapi-extender>-->
-<!--                                </distributions>-->
-<!--                                <upload>-->
-<!--                                    <artifactory>-->
-<!--                                        <ossrh>-->
-<!--                                            <active>ALWAYS</active>-->
-<!--                                            <host>${ossrh.url}/service/local/staging/deploy/maven2/</host>-->
-<!--                                            <repositories>-->
-<!--                                                <repository>-->
-<!--                                                    <path>openapi-extender-springdoc/target/openapi-extender-springdoc-${project.version}.jar</path>-->
-<!--                                                    <fileTypes>JAR</fileTypes>-->
-<!--                                                    <active>ALWAYS</active>-->
-<!--                                                </repository>-->
-<!--                                                <repository>-->
-<!--                                                    <path>openapi-extender-spring-test/target/openapi-extender-spring-test-${project.version}.jar</path>-->
-<!--                                                    <fileTypes>JAR</fileTypes>-->
-<!--                                                    <active>ALWAYS</active>-->
-<!--                                                </repository>-->
-<!--                                                <repository>-->
-<!--                                                    <path>openapi-extender-resource-generator/target/openapi-extender-resource-generator-${project.version}.jar</path>-->
-<!--                                                    <fileTypes>JAR</fileTypes>-->
-<!--                                                    <active>ALWAYS</active>-->
-<!--                                                </repository>-->
-<!--                                                <repository>-->
-<!--                                                    <path>openapi-extender/target/openapi-extender-${project.version}.jar</path>-->
-<!--                                                    <fileTypes>JAR</fileTypes>-->
-<!--                                                    <active>ALWAYS</active>-->
-<!--                                                </repository>-->
-<!--                                            </repositories>-->
-<!--                                            <authorization>BASIC</authorization>-->
-<!--                                        </ossrh>-->
-<!--                                    </artifactory>-->
-<!--                                </upload>-->
+                                <!--                                <distributions>-->
+                                <!--                                    <openapi-extender-springdoc>-->
+                                <!--                                        <active>ALWAYS</active>-->
+                                <!--                                        <type>SINGLE_JAR</type>-->
+                                <!--                                        <artifacts>-->
+                                <!--                                            <artifact>-->
+                                <!--                                                <path>openapi-extender-springdoc/target/openapi-extender-springdoc-${project.version}.jar</path>-->
+                                <!--                                            </artifact>-->
+                                <!--                                        </artifacts>-->
+                                <!--                                    </openapi-extender-springdoc>-->
+                                <!--                                    <openapi-extender-spring-test>-->
+                                <!--                                        <active>ALWAYS</active>-->
+                                <!--                                        <type>SINGLE_JAR</type>-->
+                                <!--                                        <artifacts>-->
+                                <!--                                            <artifact>-->
+                                <!--                                                <path>openapi-extender-spring-test/target/openapi-extender-spring-test-${project.version}.jar</path>-->
+                                <!--                                            </artifact>-->
+                                <!--                                        </artifacts>-->
+                                <!--                                    </openapi-extender-spring-test>-->
+                                <!--                                    <openapi-extender-resource-generator>-->
+                                <!--                                        <active>ALWAYS</active>-->
+                                <!--                                        <type>SINGLE_JAR</type>-->
+                                <!--                                        <artifacts>-->
+                                <!--                                            <artifact>-->
+                                <!--                                                <path>openapi-extender-resource-generator/target/openapi-extender-resource-generator-${project.version}.jar</path>-->
+                                <!--                                            </artifact>-->
+                                <!--                                        </artifacts>-->
+                                <!--                                    </openapi-extender-resource-generator>-->
+                                <!--                                    <openapi-extender>-->
+                                <!--                                        <active>ALWAYS</active>-->
+                                <!--                                        <type>SINGLE_JAR</type>-->
+                                <!--                                        <artifacts>-->
+                                <!--                                            <artifact>-->
+                                <!--                                                <path>openapi-extender/target/openapi-extender-${project.version}.jar</path>-->
+                                <!--                                            </artifact>-->
+                                <!--                                        </artifacts>-->
+                                <!--                                    </openapi-extender>-->
+                                <!--                                </distributions>-->
+                                <!--                                <upload>-->
+                                <!--                                    <artifactory>-->
+                                <!--                                        <ossrh>-->
+                                <!--                                            <active>ALWAYS</active>-->
+                                <!--                                            <host>${ossrh.url}/service/local/staging/deploy/maven2/</host>-->
+                                <!--                                            <repositories>-->
+                                <!--                                                <repository>-->
+                                <!--                                                    <path>openapi-extender-springdoc/target/openapi-extender-springdoc-${project.version}.jar</path>-->
+                                <!--                                                    <fileTypes>JAR</fileTypes>-->
+                                <!--                                                    <active>ALWAYS</active>-->
+                                <!--                                                </repository>-->
+                                <!--                                                <repository>-->
+                                <!--                                                    <path>openapi-extender-spring-test/target/openapi-extender-spring-test-${project.version}.jar</path>-->
+                                <!--                                                    <fileTypes>JAR</fileTypes>-->
+                                <!--                                                    <active>ALWAYS</active>-->
+                                <!--                                                </repository>-->
+                                <!--                                                <repository>-->
+                                <!--                                                    <path>openapi-extender-resource-generator/target/openapi-extender-resource-generator-${project.version}.jar</path>-->
+                                <!--                                                    <fileTypes>JAR</fileTypes>-->
+                                <!--                                                    <active>ALWAYS</active>-->
+                                <!--                                                </repository>-->
+                                <!--                                                <repository>-->
+                                <!--                                                    <path>openapi-extender/target/openapi-extender-${project.version}.jar</path>-->
+                                <!--                                                    <fileTypes>JAR</fileTypes>-->
+                                <!--                                                    <active>ALWAYS</active>-->
+                                <!--                                                </repository>-->
+                                <!--                                            </repositories>-->
+                                <!--                                            <authorization>BASIC</authorization>-->
+                                <!--                                        </ossrh>-->
+                                <!--                                    </artifactory>-->
+                                <!--                                </upload>-->
                             </jreleaser>
                         </configuration>
                     </plugin>
@@ -359,19 +359,22 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!--                    <plugin>-->
-                    <!--                        <groupId>org.apache.maven.plugins</groupId>-->
-                    <!--                        <artifactId>maven-javadoc-plugin</artifactId>-->
-                    <!--                        <version>${maven-javadoc-plugin.version}</version>-->
-                    <!--                        <executions>-->
-                    <!--                            <execution>-->
-                    <!--                                <id>attach-javadocs</id>-->
-                    <!--                                <goals>-->
-                    <!--                                    <goal>jar</goal>-->
-                    <!--                                </goals>-->
-                    <!--                            </execution>-->
-                    <!--                        </executions>-->
-                    <!--                    </plugin>-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <failOnError>false</failOnError>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
