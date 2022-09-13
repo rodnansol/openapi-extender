@@ -2,7 +2,7 @@
 name: Housekeeping
 about: Housekeeping task description
 title: ''
-labels: enhancement
+labels: enhancement, housekeeping
 assignees: nandorholozsnyak
 
 ---
