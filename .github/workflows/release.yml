@@ -1,0 +1,53 @@
+name: release
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    name: build-and-testing
+    env:
+#      JRELEASER_TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+#      JRELEASER_TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+#      JRELEASER_TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+#      JRELEASER_TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+      JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+      JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Acquire tag name
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Echo Release Version
+        run: echo "Release version:" $RELEASE_VERSION
+#      - name: Setup Java
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: 8
+#          distribution: 'temurin'
+#          cache: 'maven'
+#          server-id: ossrh
+#          server-username: MAVEN_USERNAME
+#          server-password: MAVEN_CENTRAL_TOKEN
+#          gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
+#          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+#      - name: Release to Maven Central
+#        env:
+#          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+#          MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_PASSWORD }}
+#          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+#        run: |
+#          export GPG_TTY=$(tty)
+#          git config user.name "${{ github.event.head_commit.committer.name }}"
+#          git config user.email "${{ github.event.head_commit.committer.email }}"
+#          mvn -B --file pom.xml release:prepare release:perform
+#      - name: Run JReleaser
+#        uses: jreleaser/release-action@v2
+#        env:
+#          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

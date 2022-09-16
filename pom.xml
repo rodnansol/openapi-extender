@@ -5,7 +5,7 @@
     <groupId>org.rodnansol</groupId>
     <artifactId>openapi-extender-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>999-SNAPSHOT</version>
     <modules>
         <module>openapi-extender</module>
         <module>openapi-extender-resource-generator</module>
@@ -38,9 +38,17 @@
         <jreleaser-maven-plugin.version>1.1.0</jreleaser-maven-plugin.version>
         <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
         <maven-release-plugin.version>3.0.0-M6</maven-release-plugin.version>
+        <!--RELEASE-->
+        <ossrh.url>https://s01.oss.sonatype.org</ossrh.url>
+        <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <!--/RELEASE-->
     </properties>
 
     <!--Release Stuff-->
+
     <name>OpenAPI Extender - Parent</name>
     <description>OpenAPI Extender</description>
     <url>https://github.com/rodnansol/openapi-extender</url>
@@ -54,6 +62,17 @@
             </roles>
         </developer>
     </developers>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>${ossrh.url}/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>${ossrh.url}/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <licenses>
         <license>
@@ -240,208 +259,112 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                    <preparationGoals>jreleaser:release</preparationGoals>
+                    <scmCommentPrefix>release:</scmCommentPrefix>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jreleaser</groupId>
+                <artifactId>jreleaser-maven-plugin</artifactId>
+                <configuration>
+                    <jreleaser>
+                        <signing>
+                            <active>NEVER</active>
+                        </signing>
+                        <release>
+                            <github>
+                                <skipTag>true</skipTag>
+                                <releaseName>Release ${project.version}</releaseName>
+                                <!--
+                                The tag associated with the release.
+                                May define a `JRELEASER_TAG_NAME` environment variable instead.
+                                If left unspecified, will use `v{{projectVersion}}`.
+                                -->
+                                <!--                                        <tagName>v1.0.0</tagName>-->
+                                <!--
+                                  The tag to compare against the release tag. Is used to fetch all commits between those tags.
+                                  May define a `JRELEASER_PREVIOUS_TAG_NAME` environment variable instead.
+                                  If left unspecified, will use the previous logical tag of `tagName`.
+                                -->
+                                <!--                                        <previousTagName>v0.9.0</previousTagName>-->
+                                <overwrite>true</overwrite>
+                                <changelog>
+                                    <formatted>ALWAYS</formatted>
+                                    <format>- {{commitShortHash}} {{commitTitle}}</format>
+                                    <preset>conventional-commits</preset>
+                                    <contributors>
+                                        <format>- {{contributorName}}</format>
+                                    </contributors>
+                                    <hide>
+                                        <categories>merge</categories>
+                                        <contributors>GitHub,dependabot</contributors>
+                                    </hide>
+                                </changelog>
+                            </github>
+                        </release>
+                    </jreleaser>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus-staging-maven-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>${ossrh.url}</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven-gpg-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <properties>
-                <ossrh.url>https://s01.oss.sonatype.org</ossrh.url>
-                <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
-                <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-                <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
-                <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-            </properties>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>ossrh</id>
-                    <url>${ossrh.url}/content/repositories/snapshots</url>
-                </snapshotRepository>
-                <repository>
-                    <id>ossrh</id>
-                    <url>${ossrh.url}/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                        <configuration>
-                            <tagNameFormat>@{project.version}</tagNameFormat>
-                            <preparationGoals>jreleaser:release</preparationGoals>
-                            <scmCommentPrefix>release:</scmCommentPrefix>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.jreleaser</groupId>
-                        <artifactId>jreleaser-maven-plugin</artifactId>
-                        <configuration>
-                            <jreleaser>
-                                <signing>
-                                    <active>NEVER</active>
-                                </signing>
-                                <release>
-                                    <github>
-                                        <skipTag>true</skipTag>
-                                        <releaseName>Release ${project.version}</releaseName>
-                                        <!--
-                                        The tag associated with the release.
-                                        May define a `JRELEASER_TAG_NAME` environment variable instead.
-                                        If left unspecified, will use `v{{projectVersion}}`.
-                                        -->
-<!--                                        <tagName>v1.0.0</tagName>-->
-                                        <!--
-                                          The tag to compare against the release tag. Is used to fetch all commits between those tags.
-                                          May define a `JRELEASER_PREVIOUS_TAG_NAME` environment variable instead.
-                                          If left unspecified, will use the previous logical tag of `tagName`.
-                                        -->
-<!--                                        <previousTagName>v0.9.0</previousTagName>-->
-                                        <overwrite>true</overwrite>
-                                        <changelog>
-                                            <formatted>ALWAYS</formatted>
-                                            <format>- {{commitShortHash}} {{commitTitle}}</format>
-                                            <preset>conventional-commits</preset>
-                                            <contributors>
-                                                <format>- {{contributorName}}</format>
-                                            </contributors>
-                                            <hide>
-                                                <categories>merge</categories>
-                                                <contributors>GitHub,dependabot</contributors>
-                                            </hide>
-                                        </changelog>
-                                    </github>
-                                </release>
-                                <!--                                <distributions>-->
-                                <!--                                    <openapi-extender-springdoc>-->
-                                <!--                                        <active>ALWAYS</active>-->
-                                <!--                                        <type>SINGLE_JAR</type>-->
-                                <!--                                        <artifacts>-->
-                                <!--                                            <artifact>-->
-                                <!--                                                <path>openapi-extender-springdoc/target/openapi-extender-springdoc-${project.version}.jar</path>-->
-                                <!--                                            </artifact>-->
-                                <!--                                        </artifacts>-->
-                                <!--                                    </openapi-extender-springdoc>-->
-                                <!--                                    <openapi-extender-spring-test>-->
-                                <!--                                        <active>ALWAYS</active>-->
-                                <!--                                        <type>SINGLE_JAR</type>-->
-                                <!--                                        <artifacts>-->
-                                <!--                                            <artifact>-->
-                                <!--                                                <path>openapi-extender-spring-test/target/openapi-extender-spring-test-${project.version}.jar</path>-->
-                                <!--                                            </artifact>-->
-                                <!--                                        </artifacts>-->
-                                <!--                                    </openapi-extender-spring-test>-->
-                                <!--                                    <openapi-extender-resource-generator>-->
-                                <!--                                        <active>ALWAYS</active>-->
-                                <!--                                        <type>SINGLE_JAR</type>-->
-                                <!--                                        <artifacts>-->
-                                <!--                                            <artifact>-->
-                                <!--                                                <path>openapi-extender-resource-generator/target/openapi-extender-resource-generator-${project.version}.jar</path>-->
-                                <!--                                            </artifact>-->
-                                <!--                                        </artifacts>-->
-                                <!--                                    </openapi-extender-resource-generator>-->
-                                <!--                                    <openapi-extender>-->
-                                <!--                                        <active>ALWAYS</active>-->
-                                <!--                                        <type>SINGLE_JAR</type>-->
-                                <!--                                        <artifacts>-->
-                                <!--                                            <artifact>-->
-                                <!--                                                <path>openapi-extender/target/openapi-extender-${project.version}.jar</path>-->
-                                <!--                                            </artifact>-->
-                                <!--                                        </artifacts>-->
-                                <!--                                    </openapi-extender>-->
-                                <!--                                </distributions>-->
-                                <!--                                <upload>-->
-                                <!--                                    <artifactory>-->
-                                <!--                                        <ossrh>-->
-                                <!--                                            <active>ALWAYS</active>-->
-                                <!--                                            <host>${ossrh.url}/service/local/staging/deploy/maven2/</host>-->
-                                <!--                                            <repositories>-->
-                                <!--                                                <repository>-->
-                                <!--                                                    <path>openapi-extender-springdoc/target/openapi-extender-springdoc-${project.version}.jar</path>-->
-                                <!--                                                    <fileTypes>JAR</fileTypes>-->
-                                <!--                                                    <active>ALWAYS</active>-->
-                                <!--                                                </repository>-->
-                                <!--                                                <repository>-->
-                                <!--                                                    <path>openapi-extender-spring-test/target/openapi-extender-spring-test-${project.version}.jar</path>-->
-                                <!--                                                    <fileTypes>JAR</fileTypes>-->
-                                <!--                                                    <active>ALWAYS</active>-->
-                                <!--                                                </repository>-->
-                                <!--                                                <repository>-->
-                                <!--                                                    <path>openapi-extender-resource-generator/target/openapi-extender-resource-generator-${project.version}.jar</path>-->
-                                <!--                                                    <fileTypes>JAR</fileTypes>-->
-                                <!--                                                    <active>ALWAYS</active>-->
-                                <!--                                                </repository>-->
-                                <!--                                                <repository>-->
-                                <!--                                                    <path>openapi-extender/target/openapi-extender-${project.version}.jar</path>-->
-                                <!--                                                    <fileTypes>JAR</fileTypes>-->
-                                <!--                                                    <active>ALWAYS</active>-->
-                                <!--                                                </repository>-->
-                                <!--                                            </repositories>-->
-                                <!--                                            <authorization>BASIC</authorization>-->
-                                <!--                                        </ossrh>-->
-                                <!--                                    </artifactory>-->
-                                <!--                                </upload>-->
-                            </jreleaser>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${nexus-staging-maven-plugin.version}</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>${ossrh.url}</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${maven-gpg-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>
