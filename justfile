@@ -27,9 +27,9 @@ deploy-to-ossrh:
   mvn -Prelease clean verify deploy
 
 full-release:
-  mvn release:prepare release:perform -Prelease -DreleaseVersion=0.1.1 -DdevelopmentVersion=0.1.2-SNAPSHOT
+  mvn release:prepare release:perform -Prelease -DreleaseVersion=0.1.1 -DdevelopmentVersion=999-SNAPSHOT
 
 jrelease:
-  mvn versions:set -DnewVersion=0.1.0
-  mvn -Prelease jreleaser:release
-  mvn versions:set -DnewVersion=0.1.1-SNAPSHOT
+  mvn versions:set -DnewVersion=0.1.1.1
+  mvn -Prelease jreleaser:release -N
+  mvn versions:set -DnewVersion=999-SNAPSHOT

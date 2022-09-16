@@ -5,7 +5,7 @@
     <groupId>org.rodnansol</groupId>
     <artifactId>openapi-extender-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>999-SNAPSHOT</version>
     <modules>
         <module>openapi-extender</module>
         <module>openapi-extender-resource-generator</module>
@@ -63,9 +63,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:rodnansol/openapi-extender.git</connection>
-        <developerConnection>scm:git:git@github.com:rodnansol/openapi-extender.git</developerConnection>
-        <url>https://github.com/rodnansol/openapi-extender</url>
+        <connection>scm:git:git@${project.scm.url}</connection>
+        <developerConnection>scm:git:${project.scm.url}</developerConnection>
+        <url>git@github.com:rodnansol/openapi-extender.git</url>
         <tag>HEAD</tag>
     </scm>
     <!--End Release Stuff-->
@@ -184,11 +184,6 @@
                     <version>${editorconfig-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.jreleaser</groupId>
-                    <artifactId>jreleaser-maven-plugin</artifactId>
-                    <version>${jreleaser-maven-plugin.version}</version>
-                </plugin>
-                <plugin>
                     <groupId>com.rudikershaw.gitbuildhook</groupId>
                     <artifactId>git-build-hook-maven-plugin</artifactId>
                     <version>${git-build-hook-maven-plugin.version}</version>
@@ -269,14 +264,14 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>
                         <configuration>
-                            <tagNameFormat>@{project.version}</tagNameFormat>
-                            <preparationGoals>jreleaser:release</preparationGoals>
+                            <tagNameFormat>v@{project.version}</tagNameFormat>
                             <scmCommentPrefix>release:</scmCommentPrefix>
                         </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.jreleaser</groupId>
                         <artifactId>jreleaser-maven-plugin</artifactId>
+                        <version>${jreleaser-maven-plugin.version}</version>
                         <configuration>
                             <jreleaser>
                                 <signing>
@@ -284,21 +279,8 @@
                                 </signing>
                                 <release>
                                     <github>
-                                        <skipTag>true</skipTag>
+                                        <tagName>v${project.version}</tagName>
                                         <releaseName>Release ${project.version}</releaseName>
-                                        <!--
-                                        The tag associated with the release.
-                                        May define a `JRELEASER_TAG_NAME` environment variable instead.
-                                        If left unspecified, will use `v{{projectVersion}}`.
-                                        -->
-<!--                                        <tagName>v1.0.0</tagName>-->
-                                        <!--
-                                          The tag to compare against the release tag. Is used to fetch all commits between those tags.
-                                          May define a `JRELEASER_PREVIOUS_TAG_NAME` environment variable instead.
-                                          If left unspecified, will use the previous logical tag of `tagName`.
-                                        -->
-<!--                                        <previousTagName>v0.9.0</previousTagName>-->
-                                        <overwrite>true</overwrite>
                                         <changelog>
                                             <formatted>ALWAYS</formatted>
                                             <format>- {{commitShortHash}} {{commitTitle}}</format>
@@ -313,75 +295,6 @@
                                         </changelog>
                                     </github>
                                 </release>
-                                <!--                                <distributions>-->
-                                <!--                                    <openapi-extender-springdoc>-->
-                                <!--                                        <active>ALWAYS</active>-->
-                                <!--                                        <type>SINGLE_JAR</type>-->
-                                <!--                                        <artifacts>-->
-                                <!--                                            <artifact>-->
-                                <!--                                                <path>openapi-extender-springdoc/target/openapi-extender-springdoc-${project.version}.jar</path>-->
-                                <!--                                            </artifact>-->
-                                <!--                                        </artifacts>-->
-                                <!--                                    </openapi-extender-springdoc>-->
-                                <!--                                    <openapi-extender-spring-test>-->
-                                <!--                                        <active>ALWAYS</active>-->
-                                <!--                                        <type>SINGLE_JAR</type>-->
-                                <!--                                        <artifacts>-->
-                                <!--                                            <artifact>-->
-                                <!--                                                <path>openapi-extender-spring-test/target/openapi-extender-spring-test-${project.version}.jar</path>-->
-                                <!--                                            </artifact>-->
-                                <!--                                        </artifacts>-->
-                                <!--                                    </openapi-extender-spring-test>-->
-                                <!--                                    <openapi-extender-resource-generator>-->
-                                <!--                                        <active>ALWAYS</active>-->
-                                <!--                                        <type>SINGLE_JAR</type>-->
-                                <!--                                        <artifacts>-->
-                                <!--                                            <artifact>-->
-                                <!--                                                <path>openapi-extender-resource-generator/target/openapi-extender-resource-generator-${project.version}.jar</path>-->
-                                <!--                                            </artifact>-->
-                                <!--                                        </artifacts>-->
-                                <!--                                    </openapi-extender-resource-generator>-->
-                                <!--                                    <openapi-extender>-->
-                                <!--                                        <active>ALWAYS</active>-->
-                                <!--                                        <type>SINGLE_JAR</type>-->
-                                <!--                                        <artifacts>-->
-                                <!--                                            <artifact>-->
-                                <!--                                                <path>openapi-extender/target/openapi-extender-${project.version}.jar</path>-->
-                                <!--                                            </artifact>-->
-                                <!--                                        </artifacts>-->
-                                <!--                                    </openapi-extender>-->
-                                <!--                                </distributions>-->
-                                <!--                                <upload>-->
-                                <!--                                    <artifactory>-->
-                                <!--                                        <ossrh>-->
-                                <!--                                            <active>ALWAYS</active>-->
-                                <!--                                            <host>${ossrh.url}/service/local/staging/deploy/maven2/</host>-->
-                                <!--                                            <repositories>-->
-                                <!--                                                <repository>-->
-                                <!--                                                    <path>openapi-extender-springdoc/target/openapi-extender-springdoc-${project.version}.jar</path>-->
-                                <!--                                                    <fileTypes>JAR</fileTypes>-->
-                                <!--                                                    <active>ALWAYS</active>-->
-                                <!--                                                </repository>-->
-                                <!--                                                <repository>-->
-                                <!--                                                    <path>openapi-extender-spring-test/target/openapi-extender-spring-test-${project.version}.jar</path>-->
-                                <!--                                                    <fileTypes>JAR</fileTypes>-->
-                                <!--                                                    <active>ALWAYS</active>-->
-                                <!--                                                </repository>-->
-                                <!--                                                <repository>-->
-                                <!--                                                    <path>openapi-extender-resource-generator/target/openapi-extender-resource-generator-${project.version}.jar</path>-->
-                                <!--                                                    <fileTypes>JAR</fileTypes>-->
-                                <!--                                                    <active>ALWAYS</active>-->
-                                <!--                                                </repository>-->
-                                <!--                                                <repository>-->
-                                <!--                                                    <path>openapi-extender/target/openapi-extender-${project.version}.jar</path>-->
-                                <!--                                                    <fileTypes>JAR</fileTypes>-->
-                                <!--                                                    <active>ALWAYS</active>-->
-                                <!--                                                </repository>-->
-                                <!--                                            </repositories>-->
-                                <!--                                            <authorization>BASIC</authorization>-->
-                                <!--                                        </ossrh>-->
-                                <!--                                    </artifactory>-->
-                                <!--                                </upload>-->
                             </jreleaser>
                         </configuration>
                     </plugin>
@@ -438,6 +351,12 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
