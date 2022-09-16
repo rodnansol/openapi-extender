@@ -23,9 +23,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Acquire tag name
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$(echo $RELEASE_VERSION | cut -b 2-)" >> $GITHUB_ENV
       - name: Echo Release Version
-        run: echo "Release version:" $RELEASE_VERSION
+        run: |
+          echo "Release version:" $RELEASE_VERSION
 #      - name: Setup Java
 #        uses: actions/setup-java@v2
 #        with:
