@@ -38,6 +38,8 @@
         <jreleaser-maven-plugin.version>1.1.0</jreleaser-maven-plugin.version>
         <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
         <maven-release-plugin.version>3.0.0-M6</maven-release-plugin.version>
+        <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     </properties>
 
     <!--Release Stuff-->
@@ -193,10 +195,30 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>${maven-release-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven-checkstyle-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <jacoco-agent.destfile>**/jacoco.exec</jacoco-agent.destfile>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.ec4j.maven</groupId>
                 <artifactId>editorconfig-maven-plugin</artifactId>
@@ -235,8 +257,59 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report-aggregate</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                        <configuration>
+                            <dataFileIncludes>
+                                <dataFileInclude>**/jacoco.exec</dataFileInclude>
+                            </dataFileIncludes>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <profiles>
         <profile>
