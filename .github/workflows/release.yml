@@ -50,7 +50,7 @@ jobs:
       - name: Run JReleaser
         run: |
           mvn versions:set -DnewVersion=$RELEASE_VERSION
-          mvn jreleaser:release jreleaser:announce -Prelease -N
+          mvn jreleaser:release jreleaser:announce -Prelease -N -X
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_VERSION: ${{ inputs.releaseVersion }}
