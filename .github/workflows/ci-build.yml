@@ -17,14 +17,14 @@ jobs:
         os: [ubuntu-latest]
     name: build-and-testing
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: install-java8
         uses: actions/setup-java@v2
         with:
           java-version: 8
           distribution: temurin
           cache: maven
-      - name: build-project
+      - name: Build & Verify Project
         run: ./mvnw clean verify
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3

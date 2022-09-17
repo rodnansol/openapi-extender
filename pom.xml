@@ -350,6 +350,18 @@
                                 <signing>
                                     <active>NEVER</active>
                                 </signing>
+                                <announce>
+                                    <twitter>
+                                        <active>ALWAYS</active>
+                                        <connectTimeout>20</connectTimeout>
+                                        <readTimeout>60</readTimeout>
+                                        <status>🚀 {{projectNameCapitalized}} {{projectVersion}} has been released! {{releaseNotesUrl}}</status>
+                                        <statuses>
+                                            <status>🚀 {{projectNameCapitalized}} {{projectVersion}} has been released! {{releaseNotesUrl}}</status>
+                                            <status>New and exciting featurer added to {{projectNameCapitalized}} {{projectVersion}}</status>
+                                        </statuses>
+                                    </twitter>
+                                </announce>
                                 <release>
                                     <github>
                                         <tagName>v${project.version}</tagName>
