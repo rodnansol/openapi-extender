@@ -355,7 +355,7 @@
                                         <active>ALWAYS</active>
                                         <connectTimeout>20</connectTimeout>
                                         <readTimeout>60</readTimeout>
-                                        <status>🚀 {{projectNameCapitalized}} {{projectVersion}} has been released! {{releaseNotesUrl}}</status>
+                                        <status>🚀 OpenAPI Extender {{projectVersion}} has been released! {{releaseNotesUrl}}</status>
                                     </twitter>
                                 </announce>
                                 <release>
