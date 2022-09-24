@@ -1,4 +1,4 @@
-package org.rodnansol;
+package org.rodnansol.core.operation;
 
 /**
  * Exception being thrown on errors in the extender actions.

@@ -1,4 +1,4 @@
-package org.rodnansol;
+package org.rodnansol.core.operation;
 
 
 import io.swagger.v3.oas.models.Operation;

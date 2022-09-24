@@ -1,10 +1,7 @@
 package com.example.springbootopenmapiwithtest;
 
-import org.junit.jupiter.api.Nested;
-import org.rodnansol.ApiResponseDocumentReporter;
-import org.rodnansol.MockMvcOpenApiDocumentation;
-import org.rodnansol.RequestBodyDocumentReporter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.rodnansol.MockMvcOpenApiDocumentation.documentRequest;
-import static org.rodnansol.MockMvcOpenApiDocumentation.documentResponse;
+import static org.rodnansol.spring.MockMvcOpenApiDocumentation.documentRequest;
+import static org.rodnansol.spring.MockMvcOpenApiDocumentation.documentResponse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,7 +36,7 @@ class UserControllerTest {
         void getUser_isBadRequest() throws Exception {
             mockMvc.perform(get("/user?id=BAD"))
                 .andExpect(status().isBadRequest())
-                .andDo(result -> documentResponse("getUser", "When bad thing happens").handle(result));
+                .andDo(result -> documentResponse("getUser", "When bad thing happens", "Happens because the id is BAD and it is code to fail in these cases").handle(result));
         }
 
         @Test

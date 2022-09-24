@@ -1,4 +1,4 @@
-package org.rodnansol;
+package org.rodnansol.core.operation;
 
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.examples.Example;
@@ -15,7 +15,7 @@ import java.util.function.BiConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.rodnansol.IOUtils.MEDIA_TYPE;
+import static org.rodnansol.core.utils.IOUtils.MEDIA_TYPE;
 
 /**
  *

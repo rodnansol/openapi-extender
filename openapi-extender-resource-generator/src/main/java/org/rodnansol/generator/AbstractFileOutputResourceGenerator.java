@@ -1,4 +1,4 @@
-package org.rodnansol;
+package org.rodnansol.generator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Abstract class that generates the resource files
+ */
 public abstract class AbstractFileOutputResourceGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFileOutputResourceGenerator.class);
@@ -21,7 +24,7 @@ public abstract class AbstractFileOutputResourceGenerator {
      * @param params parameter object with all necessary information.
      * @throws IOException when resource/file generation fails.
      */
-    void generateResources(ResourceGeneratorParams params) throws IOException {
+    public void generateResources(ResourceGeneratorParams params) throws IOException {
         String operation = params.getOperation();
         String contentType = params.getContentType();
         byte[] content = params.getContent();
@@ -33,15 +36,16 @@ public abstract class AbstractFileOutputResourceGenerator {
         String folderName = getFolderName(operation);
         File folder = Paths.get(folderName).toFile();
         folder.mkdirs();
-        String aggregatorFile = createAggregatorFile(operation, params.getDescription(), status, contentType);
+        String aggregatorFile = createFilePath(operation, status, contentType, params.getName(), params.getDescription());
         Path file = Paths.get(aggregatorFile);
         if (!file.toFile().exists()) {
+            LOGGER.debug("File does not exist, creating it:" + aggregatorFile);
             file = Files.createFile(file);
         }
         FileWriter.INSTANCE.writeToFile(file, content, contentType);
     }
 
-    protected abstract String createAggregatorFile(String operation, String description, int status, String contentType);
+    protected abstract String createFilePath(String operation, int status, String contentType, String name, String optionalDescription);
 
     protected abstract String getFolderName(String operation);
 

@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.internal.util.io.IOUtil;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.rodnansol.core.operation.ResponseExampleOperationExtenderAction;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,13 +1,10 @@
-package org.rodnansol;
+package org.rodnansol.core.operation;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.regex.Matcher;
 
-import static org.rodnansol.IOUtils.copy;
-import static org.rodnansol.IOUtils.readFileContent;
+import static org.rodnansol.core.utils.IOUtils.readFileContent;
 
 class RequestBodyMatcherResult {
 

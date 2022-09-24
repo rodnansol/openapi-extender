@@ -1,5 +1,7 @@
-package org.rodnansol;
+package org.rodnansol.spring;
 
+import org.rodnansol.generator.ReportParams;
+import org.rodnansol.generator.RequestBodyExampleFileOutputResourceGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -15,14 +17,21 @@ public class RequestBodyDocumentReporter implements ResultHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestBodyDocumentReporter.class);
     private final RequestBodyExampleFileOutputResourceGenerator requestBodyExampleDocumenter;
     private final String operation;
+    private final String name;
     private final String description;
 
-    public RequestBodyDocumentReporter(String operation, String description) {
-        this(operation, description, RequestBodyExampleFileOutputResourceGenerator.DEFAULT_OUTPUT_DIRECTORY);
+    public RequestBodyDocumentReporter(String operation, String name) {
+        this(operation, name, null, RequestBodyExampleFileOutputResourceGenerator.DEFAULT_OUTPUT_DIRECTORY);
     }
 
-    public RequestBodyDocumentReporter(String operation, String description, String outputDirectory) {
+    public RequestBodyDocumentReporter(String operation, String name, String description) {
+        this(operation, name, description, RequestBodyExampleFileOutputResourceGenerator.DEFAULT_OUTPUT_DIRECTORY);
+    }
+
+
+    public RequestBodyDocumentReporter(String operation, String name, String description, String outputDirectory) {
         this.operation = operation;
+        this.name = name;
         this.description = description;
         this.requestBodyExampleDocumenter = new RequestBodyExampleFileOutputResourceGenerator(outputDirectory);
     }
@@ -32,7 +41,9 @@ public class RequestBodyDocumentReporter implements ResultHandler {
         try {
             MockHttpServletResponse response = result.getResponse();
             MockHttpServletRequest request = result.getRequest();
-            requestBodyExampleDocumenter.generateResources(new RequestBodyExampleFileOutputResourceGenerator.Params(operation, description, response.getStatus(), request.getContentType(), request.getContentAsByteArray()));
+            ReportParams params = new ReportParams(operation, name, response.getStatus(), request.getContentType(), request.getContentAsByteArray());
+            params.setDescription(description);
+            requestBodyExampleDocumenter.generateResources(params);
         } catch (Exception e) {
             throw new OpenApiExtenderResultHandlerException("Error during documenting request body", e);
         }

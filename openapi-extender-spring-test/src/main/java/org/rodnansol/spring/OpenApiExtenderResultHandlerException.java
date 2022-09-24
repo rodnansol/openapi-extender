@@ -1,4 +1,4 @@
-package org.rodnansol;
+package org.rodnansol.spring;
 
 /**
  * Exception to be thrown from the ResultHandlers.

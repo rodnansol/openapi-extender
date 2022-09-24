@@ -1,4 +1,4 @@
-package org.rodnansol;
+package org.rodnansol.core.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -9,9 +9,12 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Utility class to handle most common IO calls.
+ */
 public class IOUtils {
 
-    static final Map<String, String> MEDIA_TYPE;
+    public static final Map<String, String> MEDIA_TYPE;
 
     static {
         MEDIA_TYPE = new HashMap<>();
@@ -25,13 +28,19 @@ public class IOUtils {
     private IOUtils() {
     }
 
-    static String readFileContent(File file) throws IOException {
+    public static String readFileContent(File file) throws IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         copy(Files.newInputStream(file.toPath()), output);
         return output.toString();
     }
 
-    static int copy(final InputStream input, final OutputStream output) throws IOException {
+    public static String readStreamContent(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        copy(inputStream, output);
+        return output.toString();
+    }
+
+    public static int copy(final InputStream input, final OutputStream output) throws IOException {
         final long count = copyLarge(input, output);
         if (count > Integer.MAX_VALUE) {
             return -1;
@@ -40,7 +49,7 @@ public class IOUtils {
     }
 
 
-    static long copyLarge(final InputStream input, final OutputStream output)
+    public static long copyLarge(final InputStream input, final OutputStream output)
         throws IOException {
 
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];

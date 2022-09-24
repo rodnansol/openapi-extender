@@ -1,6 +1,9 @@
 package com.example.springbootopenmapiwithtest;
 
-import org.rodnansol.ApiResponseAndExampleCustomizer;
+import org.rodnansol.springdoc.ApiResponseAndExampleCustomizer;
+import org.rodnansol.springdoc.ExampleResourceReaderBean;
+import org.rodnansol.springdoc.OpenApiExampleExtenderCustomizer;
+import org.springdoc.core.customizers.OpenApiCustomiser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,10 +16,21 @@ public class SpringBootOpenmapiWithTestApplication {
     }
 
     @Bean
+    public ExampleResourceReaderBean exampleResourceReaderBean() {
+        return new ExampleResourceReaderBean();
+    }
+
+    @Bean
     public ApiResponseAndExampleCustomizer customizer() {
         return new ApiResponseAndExampleCustomizer();
     }
 
+    @Bean
+    public OpenApiCustomiser openApiCustomiser() {
+        return new OpenApiExampleExtenderCustomizer();
+    }
+
 }
+
 
 
