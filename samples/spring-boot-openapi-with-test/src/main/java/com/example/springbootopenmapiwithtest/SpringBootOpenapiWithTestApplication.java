@@ -9,12 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class SpringBootOpenmapiWithTestApplication {
+public class SpringBootOpenapiWithTestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootOpenmapiWithTestApplication.class, args);
+        SpringApplication.run(SpringBootOpenapiWithTestApplication.class, args);
     }
 
+    /**
+     * Bean to initialize the resources.
+     */
     @Bean
     public ExampleResourceReaderBean exampleResourceReaderBean() {
         ExampleResourceReaderBean exampleResourceReaderBean = new ExampleResourceReaderBean();
@@ -22,11 +25,17 @@ public class SpringBootOpenmapiWithTestApplication {
         return exampleResourceReaderBean;
     }
 
+    /**
+     * Operation customizer.
+     */
     @Bean
     public ApiResponseAndExampleCustomizer customizer() {
         return new ApiResponseAndExampleCustomizer();
     }
 
+    /**
+     * OpenAPI object customizer bean.
+     */
     @Bean
     public OpenApiCustomiser openApiCustomiser() {
         return new OpenApiExampleExtenderCustomizer();
