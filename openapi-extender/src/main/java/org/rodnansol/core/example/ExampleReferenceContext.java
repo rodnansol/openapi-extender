@@ -1,4 +1,4 @@
-package org.rodnansol.core.openapi;
+package org.rodnansol.core.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class ExampleReferenceContext {
      * @param exampleReference example reference itself.
      * @return added example reference instance.
      */
-    public ExampleReference addReference(ExampleReferenceKey referenceKey, ExampleReference exampleReference) {
+    public void addReference(ExampleReferenceKey referenceKey, ExampleReference exampleReference) {
         LinkedList<ExampleReference> holder;
         if (!references.containsKey(referenceKey)) {
             holder = new LinkedList<>();
@@ -48,7 +48,6 @@ public class ExampleReferenceContext {
         } else {
             references.get(referenceKey).add(exampleReference);
         }
-        return exampleReference;
     }
 
     /**

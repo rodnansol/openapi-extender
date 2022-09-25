@@ -1,7 +1,7 @@
 package org.rodnansol.springdoc;
 
 import io.swagger.v3.oas.models.OpenAPI;
-import org.rodnansol.core.openapi.ExampleReferenceContext;
+import org.rodnansol.core.example.ExampleReferenceContext;
 import org.rodnansol.core.openapi.OpenApiExamplePopulationAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +33,6 @@ public class OpenApiExampleExtenderCustomizer implements OpenApiCustomiser {
     }
 
     private void processResources(OpenAPI openApi) {
-        openApiExamplePopulationAction.populateExampleReferenceContext(openApi);
+        openApiExamplePopulationAction.populateOpenApiExamplesFromContext(openApi);
     }
 }

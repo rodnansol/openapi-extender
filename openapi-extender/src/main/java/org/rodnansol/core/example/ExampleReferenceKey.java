@@ -1,4 +1,4 @@
-package org.rodnansol.core.openapi;
+package org.rodnansol.core.example;
 
 import java.util.Objects;
 

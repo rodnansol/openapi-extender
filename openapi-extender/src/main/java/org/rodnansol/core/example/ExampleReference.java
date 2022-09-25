@@ -1,4 +1,4 @@
-package org.rodnansol.core.openapi;
+package org.rodnansol.core.example;
 
 /**
  * Represents an example reference read from a resource.

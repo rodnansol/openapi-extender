@@ -17,7 +17,9 @@ public class SpringBootOpenmapiWithTestApplication {
 
     @Bean
     public ExampleResourceReaderBean exampleResourceReaderBean() {
-        return new ExampleResourceReaderBean();
+        ExampleResourceReaderBean exampleResourceReaderBean = new ExampleResourceReaderBean();
+        exampleResourceReaderBean.initializeResources();
+        return exampleResourceReaderBean;
     }
 
     @Bean

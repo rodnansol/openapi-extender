@@ -1,9 +1,9 @@
 package org.rodnansol.springdoc;
 
-import org.rodnansol.core.openapi.ExampleReferencePopulationAction;
-import org.rodnansol.core.openapi.ExampleReferenceType;
-import org.rodnansol.core.openapi.ExtenderResource;
-import org.rodnansol.core.openapi.FileNameBasedExampleResourceReader;
+import org.rodnansol.core.example.ExampleReferencePopulationAction;
+import org.rodnansol.core.example.ExampleReferenceType;
+import org.rodnansol.core.resource.ExtenderResource;
+import org.rodnansol.core.resource.FileNameBasedExampleResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -33,7 +33,6 @@ public class ExampleResourceReaderBean {
         this.requestExamplePath = requestExamplePath;
         this.responseExamplePath = responseExamplePath;
         this.exampleReferencePopulationAction = exampleReferencePopulationAction;
-        initializeResources();
     }
 
     public void initializeResources() {

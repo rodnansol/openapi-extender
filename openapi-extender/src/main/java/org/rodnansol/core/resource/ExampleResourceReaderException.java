@@ -1,4 +1,4 @@
-package org.rodnansol.core.openapi;
+package org.rodnansol.core.resource;
 
 /**
  * Exception to be thrown when the resource can not be read.

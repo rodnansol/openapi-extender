@@ -1,10 +1,11 @@
-package org.rodnansol.core.openapi;
+package org.rodnansol.core.resource;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.internal.util.io.IOUtil;
+import org.rodnansol.core.example.ExampleReference;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -15,7 +16,7 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.rodnansol.core.openapi.ExampleReferenceType.REQUEST;
+import static org.rodnansol.core.example.ExampleReferenceType.REQUEST;
 
 class FileNameBasedExtenderResourceReaderTest {
 
@@ -32,7 +33,7 @@ class FileNameBasedExtenderResourceReaderTest {
 
         //When
         underTest = new FileNameBasedExampleResourceReader();
-        ExampleReference result = underTest.createExampleReference(REQUEST, new ExtenderResource("temp-file", new ByteArrayInputStream(new byte[]{})));
+        ExampleReferenceCreationResult result = underTest.createExampleReferences(REQUEST, new ExtenderResource("temp-file", new ByteArrayInputStream(new byte[]{})));
 
         //Then
         assertThat(result).isNull();
@@ -50,18 +51,21 @@ class FileNameBasedExtenderResourceReaderTest {
 
         //When
         underTest = new FileNameBasedExampleResourceReader();
-        ExampleReference result = underTest.createExampleReference(REQUEST, extenderResource);
+
+        ExampleReferenceCreationResult result = underTest.createExampleReferences(REQUEST, extenderResource);
 
         //Then
         assertExampleReference(result, testCase);
     }
 
-    private void assertExampleReference(ExampleReference exampleReference, ExampleTestCase testCase) {
-        assertThat(exampleReference.getOperationId()).isEqualTo(testCase.getExpectedOperationId());
-        assertThat(exampleReference.getStatusCode()).isEqualTo(testCase.getExpectedStatusCode());
-        assertThat(exampleReference.getName()).isEqualTo(testCase.getExpectedName());
-        assertThat(exampleReference.getDescription()).isEqualTo(testCase.getExpectedDescription());
-        assertThat(exampleReference.getMediaType()).isEqualTo(testCase.getExpectedMediaType());
+    private void assertExampleReference(ExampleReferenceCreationResult result, ExampleTestCase testCase) {
+        assertThat(result.getOperationId()).isEqualTo(testCase.getExpectedOperationId());
+        result.getReferences().forEach(exampleReference -> {
+            assertThat(exampleReference.getStatusCode()).isEqualTo(testCase.getExpectedStatusCode());
+            assertThat(exampleReference.getName()).isEqualTo(testCase.getExpectedName());
+            assertThat(exampleReference.getDescription()).isEqualTo(testCase.getExpectedDescription());
+            assertThat(exampleReference.getMediaType()).isEqualTo(testCase.getExpectedMediaType());
+        });
     }
 
     static Stream<ExampleTestCase> fileNameResolversCase() {

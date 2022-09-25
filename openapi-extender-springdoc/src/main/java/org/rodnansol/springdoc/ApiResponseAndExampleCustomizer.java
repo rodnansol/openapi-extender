@@ -1,9 +1,9 @@
 package org.rodnansol.springdoc;
 
 import io.swagger.v3.oas.models.Operation;
-import org.rodnansol.core.operation.OperationExtenderActionV2;
-import org.rodnansol.core.operation.RequestBodyExampleOperationExtenderActionV2;
-import org.rodnansol.core.operation.ResponseExampleOperationExtenderActionV2;
+import org.rodnansol.core.operation.OperationExtenderAction;
+import org.rodnansol.core.operation.RequestBodyExampleOperationExtenderAction;
+import org.rodnansol.core.operation.ResponseExampleOperationExtenderAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springdoc.core.customizers.OperationCustomizer;
@@ -20,13 +20,13 @@ import java.util.List;
 public class ApiResponseAndExampleCustomizer implements OperationCustomizer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiResponseAndExampleCustomizer.class);
-    private final List<OperationExtenderActionV2> handlers;
+    private final List<OperationExtenderAction> handlers;
 
     public ApiResponseAndExampleCustomizer() {
-        this(new RequestBodyExampleOperationExtenderActionV2(), new ResponseExampleOperationExtenderActionV2());
+        this(new RequestBodyExampleOperationExtenderAction(), new ResponseExampleOperationExtenderAction());
     }
 
-    public ApiResponseAndExampleCustomizer(OperationExtenderActionV2... actions) {
+    public ApiResponseAndExampleCustomizer(OperationExtenderAction... actions) {
         Assert.notNull(actions, "Actions must not be null");
         this.handlers = new ArrayList<>(actions.length);
         Collections.addAll(handlers, actions);
@@ -46,7 +46,7 @@ public class ApiResponseAndExampleCustomizer implements OperationCustomizer {
         return operation;
     }
 
-    private void executeAction(Operation operation, OperationExtenderActionV2 operationExtenderAction) {
+    private void executeAction(Operation operation, OperationExtenderAction operationExtenderAction) {
         try {
             operationExtenderAction.extendWith(operation);
         } catch (RuntimeException e) {
