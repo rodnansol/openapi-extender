@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.rodnansol</groupId>
+    <artifactId>openapi-extender-samples</artifactId>
+    <packaging>pom</packaging>
+    <version>999-SNAPSHOT</version>
+    <modules>
+        <module>spring-boot-openapi-with-test</module>
+    </modules>
+
+    <name>OpenAPI Extender - Samples</name>
+    <description>OpenAPI Extender Samples</description>
+</project>
