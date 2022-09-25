@@ -3,7 +3,7 @@ package org.rodnansol.core.example;
 import java.util.Objects;
 
 /**
- *
+ * Represents a key in the context.
  */
 public class ExampleReferenceKey {
 
@@ -13,14 +13,6 @@ public class ExampleReferenceKey {
     public ExampleReferenceKey(String operationId, ExampleReferenceType type) {
         this.operationId = operationId;
         this.type = type;
-    }
-
-    public static ExampleReferenceKey forRequest(String operationId) {
-        return new ExampleReferenceKey(operationId, ExampleReferenceType.REQUEST);
-    }
-
-    public static ExampleReferenceKey forResponse(String operationId) {
-        return new ExampleReferenceKey(operationId, ExampleReferenceType.RESPONSE);
     }
 
     public String getOperationId() {

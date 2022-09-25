@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
- *
+ * Action class that extends the {@link Operation}'s request body part with examples.
  */
 public final class RequestBodyExampleOperationExtenderAction implements OperationExtenderAction {
 
@@ -43,10 +43,16 @@ public final class RequestBodyExampleOperationExtenderAction implements Operatio
     }
 
     /**
-     * @param operation
+     * Extends the {@link Operation}'s request body part from the context.
+     *
+     * @param operation to be extended  from the context.
      */
     public void extendWith(Operation operation) {
+        if(operation == null) {
+            throw new IllegalArgumentException("operation is NULL");
+        }
         String operationId = operation.getOperationId();
+        LOGGER.debug("Extending operation's request body part with examples, operationId:[{}]", operationId);
         List<ExampleReference> references = exampleReferenceContext.getReference(new ExampleReferenceKey(operationId, ExampleReferenceType.REQUEST));
         if (references == null || references.isEmpty()) {
             return;
@@ -54,11 +60,7 @@ public final class RequestBodyExampleOperationExtenderAction implements Operatio
         extendWith(operation, references);
     }
 
-    /**
-     * @param operation
-     * @param references
-     */
-    public void extendWith(Operation operation, List<ExampleReference> references) {
+    private void extendWith(Operation operation, List<ExampleReference> references) {
         RequestBody requestBody = operation.getRequestBody() == null ? new RequestBody() : operation.getRequestBody();
         operation.setRequestBody(requestBody);
         Content content = requestBody.getContent() == null ? new Content() : requestBody.getContent();

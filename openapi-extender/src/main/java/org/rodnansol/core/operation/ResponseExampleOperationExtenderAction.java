@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
- *
+ * Action class that extends the {@link Operation}'s api response part with examples.
  */
 public final class ResponseExampleOperationExtenderAction implements OperationExtenderAction {
 
@@ -39,8 +39,17 @@ public final class ResponseExampleOperationExtenderAction implements OperationEx
         this.customizer = customizer;
     }
 
+    /**
+     * Extends the {@link Operation}'s API response part with examples from the context.
+     *
+     * @param operation to be extended  from the context.
+     */
     public void extendWith(final Operation operation) {
+        if (operation == null) {
+            throw new IllegalArgumentException("operation is NULL");
+        }
         String operationId = operation.getOperationId();
+        LOGGER.debug("Extending operation's API response part with examples, operationId:[{}]", operationId);
         List<ExampleReference> references = exampleReferenceContext.getReference(new ExampleReferenceKey(operationId, ExampleReferenceType.RESPONSE));
         if (references == null || references.isEmpty()) {
             return;
@@ -48,7 +57,7 @@ public final class ResponseExampleOperationExtenderAction implements OperationEx
         extendWith(operation, references);
     }
 
-    public void extendWith(Operation operation, List<ExampleReference> references) {
+    private void extendWith(Operation operation, List<ExampleReference> references) {
         references.forEach(exampleReference -> {
             String statusCode = exampleReference.getStatusCode();
             ApiResponses responses = operation.getResponses() == null ? new ApiResponses() : operation.getResponses();

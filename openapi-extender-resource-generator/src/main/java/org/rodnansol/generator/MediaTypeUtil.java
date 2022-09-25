@@ -3,7 +3,10 @@ package org.rodnansol.generator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MediaTypeUtil {
+/**
+ * Util class that stores media type related helper functions.
+ */
+public final class MediaTypeUtil {
 
     static final Map<String, String> MEDIA_TYPES;
 

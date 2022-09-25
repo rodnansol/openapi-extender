@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import static org.rodnansol.generator.MediaTypeUtil.MEDIA_TYPES;
 
+/**
+ * Response example file writer class.
+ */
 public class ApiResponseExampleFileOutputResourceGenerator extends AbstractFileOutputResourceGenerator {
 
     private static final String OPENAPI_EXTENDER_RESPONSES_FOLDER = "openapi-extender/responses/";

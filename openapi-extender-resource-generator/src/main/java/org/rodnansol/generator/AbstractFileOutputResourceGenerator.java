@@ -1,5 +1,6 @@
 package org.rodnansol.generator;
 
+import org.rodnansol.generator.io.FileWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

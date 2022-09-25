@@ -1,7 +1,7 @@
 package org.rodnansol.generator;
 
 /**
- *
+ * Class to be used as the report parameter.
  */
 public class ReportParams implements ResourceGeneratorParams {
 

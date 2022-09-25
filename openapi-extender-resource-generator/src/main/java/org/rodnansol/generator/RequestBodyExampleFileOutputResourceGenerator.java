@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import static org.rodnansol.generator.MediaTypeUtil.MEDIA_TYPES;
 
+/**
+ * Request body example file writer class.
+ */
 public class RequestBodyExampleFileOutputResourceGenerator extends AbstractFileOutputResourceGenerator {
 
     private static final String OPENAPI_EXTENDER_REQUEST_FOLDER = "openapi-extender/requests/";
