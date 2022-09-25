@@ -29,29 +29,6 @@ class UserController {
         else return ResponseEntity.ok(new UserResponse("joe", "Joe Big"));
     }
 
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "WTF", content = @Content(examples = {
-            @ExampleObject(name = "ABC", ref = "#/components/examples/test"),
-            @ExampleObject(name = "Example with value", value = """
-                {
-                    "message":"Hello World"
-                }
-                """),
-            @ExampleObject(name = "Example with file", value = "test.json"),
-            @ExampleObject(name = "Example with property", extensions = {
-                @Extension(properties = {@ExtensionProperty(name = "example", value = "test.json")})}
-            ),
-            @ExampleObject(name = "Example with complex property", extensions = {
-                @Extension(name = "complex-property", properties = {@ExtensionProperty(name = "example", value = "test2.json")})}
-            )
-        }))
-    })
-    @GetMapping(path = "/user-two", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    //@Operation(requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {@ExampleObject(ref = "#/components/examples/test")})))
-    public ResponseEntity getUserTwo(@RequestParam(name = "id", required = false) String id) {
-        return getUser(id);
-    }
-
     @PostMapping(path = "/user", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity postUser(@RequestBody UserRequest userRequest) {
         if (!userRequest.getPassword().equals(userRequest.getPasswordConfirmation())) {
