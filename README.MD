@@ -15,7 +15,10 @@ requirements/needs/gaps in your documentation.
 Developers are writing unit and integration tests on their projects, and a good test could be providing the different input and output values for a component. API developers are writing tons of integration tests for the different use cases and it
 happens sometimes that they are not giving out these tests, because of course security and privacy rules, but some output of these tests could be used to extend the already existing API.
 
-[Spring's REST Docs](https://github.com/spring-projects/spring-restdocs) does something similar, but it is not heavily involved in the OpenAPI initiative.
+## Alternatives
+
+- [Spring's REST Docs](https://github.com/spring-projects/spring-restdocs) does something similar, but it is not heavily involved in the OpenAPI initiative.
+- [Spring REST Docs API specification Integration](https://github.com/ePages-de/restdocs-api-spec) kinda the wanted features, but it is totally test driven.
 
 ## Implementation
 
@@ -28,21 +31,44 @@ The project is split up into multiple modules to make sure the end users are not
 
 ## Usage
 
+### Generate resources with tests
+
 <details>
-    <summary>Spring Boot based example</summary>
+    <summary>Spring Boot SpringDoc based example</summary>
 
 ```java
 
 @SpringBootApplication
-class SpringBootOpenmapiWithTestApplication {
+class SpringBootOpenapiWithTestApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootOpenmapiWithTestApplication.class, args);
     }
 
+    /**
+     * Bean to initialize the resources.
+     */
+    @Bean
+    public ExampleResourceReaderBean exampleResourceReaderBean() {
+        ExampleResourceReaderBean exampleResourceReaderBean = new ExampleResourceReaderBean();
+        exampleResourceReaderBean.initializeResources();
+        return exampleResourceReaderBean;
+    }
+
+    /**
+     * Operation customizer.
+     */
     @Bean
     public ApiResponseAndExampleCustomizer customizer() {
         return new ApiResponseAndExampleCustomizer();
+    }
+
+    /**
+     * OpenAPI object customizer bean.
+     */
+    @Bean
+    public OpenApiCustomiser openApiCustomiser() {
+        return new OpenApiExampleExtenderCustomizer();
     }
 
 }
@@ -184,10 +210,14 @@ class UserControllerTest {
 
 ```
 
-After running: `./mvnw package` the following generated classes will pop up:
+After running: `./mvnw package` the following generated resources will pop up:
 ![generated-files.png](docs/generated-files.png)
 
-**requests/postUser/201_Creates a user.json**: 
+By default, the generated files are going to be created to the following paths:
+- `target/classes/openapi-extender/requests/`
+- `target/classes/openapi-extender/responses/`
+
+**requests/postUser_201_Creates a user.json**: 
 ```json
 {
   "username": "new-bob",
@@ -197,7 +227,7 @@ After running: `./mvnw package` the following generated classes will pop up:
 }
 ```
 
-**responses/postUser/201_Successful operation.json**:
+**responses/postUser_201_Successful operation.json**:
 ```json
 {
   "username" : "joe",
@@ -205,7 +235,7 @@ After running: `./mvnw package` the following generated classes will pop up:
 }
 ```
 
-**responses/postUser/422_When passwords does not match.json**:
+**responses/postUser_422_When passwords does not match.json**:
 ```json
 {
   "message" : "Passwords must match",
@@ -231,20 +261,20 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-- url: http://localhost:8080
-  description: Generated server url
+  - url: http://localhost:8080
+    description: Generated server url
 paths:
   /user:
     get:
       tags:
-      - user-controller
+        - user-controller
       operationId: getUser
       parameters:
-      - name: id
-        in: query
-        required: false
-        schema:
-          type: string
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -254,55 +284,41 @@ paths:
                 type: string
               examples:
                 Standard response:
-                  description: Standard response
-                  value: |-
-                    {
-                      "username" : "joe",
-                      "fullName" : "Joe Big"
-                    }
+                  description: ""
+                  $ref: '#/components/examples/response_getUser_application_json_Standard
+                    response'
             application/xml:
               schema:
                 type: string
               examples:
                 Standard response:
-                  description: Standard response
-                  value: |-
-                    {
-                      "username" : "joe",
-                      "fullName" : "Joe Big"
-                    }
-        "500":
-          content:
-            application/json:
-              examples:
-                When coupon code does not exist:
-                  description: When coupon code does not exist
-                  value: |-
-                    {
-                      "message" : "Internal Server Error BAD2",
-                      "cause" : "Bad because internal"
-                    }
-                When server explodes:
-                  description: When server explodes
-                  value: |-
-                    {
-                      "message" : "Internal Server Error BAD2",
-                      "cause" : "Bad because internal"
-                    }
+                  description: ""
+                  $ref: '#/components/examples/response_getUser_application_json_Standard
+                    response'
         "400":
           content:
             application/json:
               examples:
                 When bad thing happens:
-                  description: When bad thing happens
-                  value: |-
-                    {
-                      "message" : "Bad BAD",
-                      "cause" : "Cause it went bad"
-                    }
+                  description: Happens because the id is BAD and it is code to fail
+                    in these cases
+                  $ref: '#/components/examples/response_getUser_application_json_When
+                    bad thing happens'
+        "500":
+          content:
+            application/json:
+              examples:
+                When coupon code does not exist:
+                  description: ""
+                  $ref: '#/components/examples/response_getUser_application_json_When
+                    coupon code does not exist'
+                When server explodes:
+                  description: ""
+                  $ref: '#/components/examples/response_getUser_application_json_When
+                    server explodes'
     post:
       tags:
-      - user-controller
+        - user-controller
       operationId: postUser
       requestBody:
         content:
@@ -310,33 +326,18 @@ paths:
             schema:
               $ref: '#/components/schemas/UserRequest'
             examples:
-              Will throw error - Returns:422:
-                description: Will throw error - Returns:422
-                value: |-
-                  {
-                    "username" : "alex123",
-                    "password" : "password123",
-                    "passwordConfirmation" : "password12",
-                    "fullName" : "Alex King"
-                  }
-              Will throw error because user already exist - Returns:422:
-                description: Will throw error because user already exist - Returns:422
-                value: |-
-                  {
-                    "username" : "bob",
-                    "password" : "password123",
-                    "passwordConfirmation" : "password123",
-                    "fullName" : "Bob Sug"
-                  }
-              Creates a user - Returns:201:
-                description: Creates a user - Returns:201
-                value: |-
-                  {
-                    "username" : "new-bob",
-                    "password" : "password123",
-                    "passwordConfirmation" : "password123",
-                    "fullName" : "Bob Sug"
-                  }
+              Creates a user:
+                description: "Returns: HTTP 201"
+                $ref: '#/components/examples/request_postUser_application_json_Creates
+                  a user'
+              Will throw error because user already exist:
+                description: "Returns: HTTP 422"
+                $ref: '#/components/examples/request_postUser_application_json_Will
+                  throw error because user already exist'
+              Will throw error:
+                description: "Returns: HTTP 422"
+                $ref: '#/components/examples/request_postUser_application_json_Will
+                  throw error'
         required: true
       responses:
         "200":
@@ -353,39 +354,27 @@ paths:
             application/json:
               examples:
                 Successful operation:
-                  description: Successful operation
-                  value: |-
-                    {
-                      "username" : "joe",
-                      "fullName" : "Joe Big"
-                    }
+                  description: ""
+                  $ref: '#/components/examples/response_postUser_application_json_Successful
+                    operation'
             application/xml:
               examples:
                 Successful operation:
-                  description: Successful operation
-                  value: |
-                    <LinkedHashMap>
-                      <username>joe</username>
-                      <fullName>Joe Big</fullName>
-                    </LinkedHashMap>
+                  description: ""
+                  $ref: '#/components/examples/response_postUser_application_xml_Successful
+                    operation'
         "422":
           content:
             application/json:
               examples:
                 When passwords does not match:
-                  description: When passwords does not match
-                  value: |-
-                    {
-                      "message" : "Passwords must match",
-                      "cause" : "Cause it went bad"
-                    }
+                  description: ""
+                  $ref: '#/components/examples/response_postUser_application_json_When
+                    passwords does not match'
                 When username already exist:
-                  description: When username already exist
-                  value: |-
-                    {
-                      "message" : "Username already exists",
-                      "cause" : "Cause it went bad"
-                    }
+                  description: ""
+                  $ref: '#/components/examples/response_postUser_application_json_When
+                    username already exist'
 components:
   schemas:
     UserRequest:
@@ -399,5 +388,89 @@ components:
           type: string
         fullName:
           type: string
+  examples:
+    request_postUser_application_json_Creates a user:
+      description: ""
+      value: |-
+        {
+          "username" : "new-bob",
+          "password" : "password123",
+          "passwordConfirmation" : "password123",
+          "fullName" : "Bob Sug"
+        }
+    response_postUser_application_json_Successful operation:
+      description: ""
+      value: |-
+        {
+          "username" : "joe",
+          "fullName" : "Joe Big"
+        }
+    response_getUser_application_json_When coupon code does not exist:
+      description: ""
+      value: |-
+        {
+          "message" : "Internal Server Error BAD2",
+          "cause" : "Bad because internal"
+        }
+    response_getUser_application_json_When server explodes:
+      description: ""
+      value: |-
+        {
+          "message" : "Internal Server Error BAD2",
+          "cause" : "Bad because internal"
+        }
+    response_getUser_application_json_When bad thing happens:
+      description: Happens because the id is BAD and it is code to fail in these cases
+      value: |-
+        {
+          "message" : "Bad BAD",
+          "cause" : "Cause it went bad"
+        }
+    request_postUser_application_json_Will throw error:
+      description: ""
+      value: |-
+        {
+          "username" : "alex123",
+          "password" : "password123",
+          "passwordConfirmation" : "password12",
+          "fullName" : "Alex King"
+        }
+    response_postUser_application_xml_Successful operation:
+      description: ""
+      value: |
+        <LinkedHashMap>
+          <username>joe</username>
+          <fullName>Joe Big</fullName>
+        </LinkedHashMap>
+    response_postUser_application_json_When username already exist:
+      description: ""
+      value: |-
+        {
+          "message" : "Username already exists",
+          "cause" : "Cause it went bad"
+        }
+    request_postUser_application_json_Will throw error because user already exist:
+      description: ""
+      value: |-
+        {
+          "username" : "bob",
+          "password" : "password123",
+          "passwordConfirmation" : "password123",
+          "fullName" : "Bob Sug"
+        }
+    response_postUser_application_json_When passwords does not match:
+      description: ""
+      value: |-
+        {
+          "message" : "Passwords must match",
+          "cause" : "Cause it went bad"
+        }
+    response_getUser_application_json_Standard response:
+      description: ""
+      value: |-
+        {
+          "username" : "joe",
+          "fullName" : "Joe Big"
+        }
 ```
 </details>
