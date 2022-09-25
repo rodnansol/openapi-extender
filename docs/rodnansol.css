@@ -1,0 +1,108 @@
+@import url(//fonts.googleapis.com/css?family=Montserrat|Open+Sans);
+@import url(https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css); /* Default asciidoc style framework - important */
+
+:root {
+    --rodnansol-color: #a275f4;
+    --maincolor: #FFFFFF;
+    --primarycolor: #a275f4;
+    --secondarycolor: #7d75f4;
+    --tertiarycolor: #CCCCCC;
+    --highlightcolor: #e59728;
+    --sidebarbackground: #12151f;
+    --linkcolor: #0D47A1;
+    --linkcoloralternate: #db3279;
+    --white: #FFFFFF;
+    --black: #000000;
+}
+
+/* Text styles */
+
+body {
+    font-family: "Open Sans", sans-serif;
+    background-color: var(--maincolor);
+    color: var(--black);
+}
+
+h1 {
+    color: var(--primarycolor) !important;
+    font-family: "Montserrat", sans-serif;
+}
+
+h2, h3, h4, h5, h6 {
+    color: var(--secondarycolor) !important;
+    font-family: "Montserrat", sans-serif;
+}
+
+.title {
+    color: var(--black) !important;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    font-family: "Open Sans", sans-serif ! important
+}
+
+#toc.toc2 a:link {
+    color: var(--linkcolor);
+}
+
+blockquote {
+    color: var(--linkcoloralternate) !important
+}
+
+.quoteblock blockquote:before {
+    color: var(--linkcoloralternate)
+}
+
+code {
+    color: var(--white);
+    background-color: var(--highlightcolor) !important
+}
+
+mark {
+    background-color: var(--highlightcolor)
+}
+
+th {
+    background-color: var(--maincolor);
+    color: var(--black) !important;
+}
+
+td {
+    background-color: var(--maincolor);
+    color: var(--black) !important
+}
+
+
+#toc.toc2 {
+    background-color: var(--sidebarbackground) !important;
+}
+
+#toc.toc2 a {
+    color: var(--white)
+}
+
+#toctitle {
+    color: var(--rodnansol-color);
+}
+
+video {
+    max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+    table {
+        width: 55vw !important;
+        font-size: 3vw;
+    }
+}
+
+.sect1 {
+    color: var(--rodnansol-color)
+}
