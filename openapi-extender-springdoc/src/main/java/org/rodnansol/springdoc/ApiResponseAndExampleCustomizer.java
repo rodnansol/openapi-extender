@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * Class that customizes incoming operations.
  */
 public class ApiResponseAndExampleCustomizer implements OperationCustomizer {
 
@@ -34,9 +34,11 @@ public class ApiResponseAndExampleCustomizer implements OperationCustomizer {
 
 
     /**
-     * @param operation     input operation
+     * Extends the operation with the examples from the context.
+     *
+     * @param operation     input operation.
      * @param handlerMethod original handler method
-     * @return
+     * @return extended operation.
      */
     @Override
     public Operation customize(Operation operation, HandlerMethod handlerMethod) {

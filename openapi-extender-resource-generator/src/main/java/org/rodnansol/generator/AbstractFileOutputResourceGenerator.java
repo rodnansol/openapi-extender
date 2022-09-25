@@ -17,6 +17,12 @@ public abstract class AbstractFileOutputResourceGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFileOutputResourceGenerator.class);
 
+    protected final String outputDirectory;
+
+    protected AbstractFileOutputResourceGenerator(String outputDirectory) {
+        this.outputDirectory = outputDirectory;
+    }
+
     /**
      * Generates resources based on the incoming object.
      * <p>
@@ -34,26 +40,11 @@ public abstract class AbstractFileOutputResourceGenerator {
             return;
         }
         int status = params.getStatus();
-        createFolderIfNeeded(operation);
+        createFolderIfNeeded();
         Path file = getFile(operation, status, contentType, params.getName(), params.getDescription());
         FileWriter.INSTANCE.writeToFile(file, content, contentType);
     }
 
-    private void createFolderIfNeeded(String operation) {
-        String folderName = getFolderName(operation);
-        File folder = Paths.get(folderName).toFile();
-        folder.mkdirs();
-    }
-
-    private Path getFile(String operation, int status, String contentType, String name, String optionalDescription) throws IOException {
-        String aggregatorFile = createFilePath(operation, status, contentType, name, optionalDescription);
-        Path file = Paths.get(aggregatorFile);
-        if (!file.toFile().exists()) {
-            LOGGER.debug("File does not exist, creating it:[{}]", aggregatorFile);
-            file = Files.createFile(file);
-        }
-        return file;
-    }
 
     /**
      * Returns the file path/name based on the incoming parameters.
@@ -68,6 +59,24 @@ public abstract class AbstractFileOutputResourceGenerator {
      * @param operation operation's name.
      * @return resource containing folder name.
      */
-    protected abstract String getFolderName(String operation);
+    protected String getFolderName() {
+        return outputDirectory + "/";
+    }
+
+    private void createFolderIfNeeded() {
+        String folderName = getFolderName();
+        File folder = Paths.get(folderName).toFile();
+        folder.mkdirs();
+    }
+
+    private Path getFile(String operation, int status, String contentType, String name, String optionalDescription) throws IOException {
+        String aggregatorFile = createFilePath(operation, status, contentType, name, optionalDescription);
+        Path file = Paths.get(aggregatorFile);
+        if (!file.toFile().exists()) {
+            LOGGER.debug("File does not exist, creating it:[{}]", aggregatorFile);
+            file = Files.createFile(file);
+        }
+        return file;
+    }
 
 }

@@ -9,7 +9,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
 
 /**
- * 0
  * Result handler implementation that documents the response of the incoming MvcResult.
  */
 public class ApiResponseDocumentReporter implements ResultHandler {

@@ -8,12 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springdoc.core.customizers.OpenApiCustomiser;
 
 /**
- *
+ * Class that customizes the {@link OpenAPI} object with the examples from the context.
  */
 public class OpenApiExampleExtenderCustomizer implements OpenApiCustomiser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenApiExampleExtenderCustomizer.class);
-
     private final ExampleReferenceContext exampleReferenceContext = ExampleReferenceContext.getInstance();
     private final OpenApiExamplePopulationAction openApiExamplePopulationAction;
 
@@ -28,8 +27,12 @@ public class OpenApiExampleExtenderCustomizer implements OpenApiCustomiser {
     @Override
     public void customise(OpenAPI openApi) {
         LOGGER.debug("Populating given OpenAPI object instance with examples from the context.");
-        processResources(openApi);
-        exampleReferenceContext.clearContext();
+        try {
+            processResources(openApi);
+            exampleReferenceContext.clearContext();
+        } catch (Exception e) {
+            LOGGER.error("Error during customizing OpenAPI object, documentation may not contain the examples", e);
+        }
     }
 
     private void processResources(OpenAPI openApi) {
