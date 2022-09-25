@@ -34,20 +34,40 @@ public abstract class AbstractFileOutputResourceGenerator {
             return;
         }
         int status = params.getStatus();
-        String folderName = getFolderName(operation);
-        File folder = Paths.get(folderName).toFile();
-        folder.mkdirs();
-        String aggregatorFile = createFilePath(operation, status, contentType, params.getName(), params.getDescription());
-        Path file = Paths.get(aggregatorFile);
-        if (!file.toFile().exists()) {
-            LOGGER.debug("File does not exist, creating it:" + aggregatorFile);
-            file = Files.createFile(file);
-        }
+        createFolderIfNeeded(operation);
+        Path file = getFile(operation, status, contentType, params.getName(), params.getDescription());
         FileWriter.INSTANCE.writeToFile(file, content, contentType);
     }
 
+    private void createFolderIfNeeded(String operation) {
+        String folderName = getFolderName(operation);
+        File folder = Paths.get(folderName).toFile();
+        folder.mkdirs();
+    }
+
+    private Path getFile(String operation, int status, String contentType, String name, String optionalDescription) throws IOException {
+        String aggregatorFile = createFilePath(operation, status, contentType, name, optionalDescription);
+        Path file = Paths.get(aggregatorFile);
+        if (!file.toFile().exists()) {
+            LOGGER.debug("File does not exist, creating it:[{}]", aggregatorFile);
+            file = Files.createFile(file);
+        }
+        return file;
+    }
+
+    /**
+     * Returns the file path/name based on the incoming parameters.
+     *
+     * @return created file path/name.
+     */
     protected abstract String createFilePath(String operation, int status, String contentType, String name, String optionalDescription);
 
+    /**
+     * Returns the containing folder.
+     *
+     * @param operation operation's name.
+     * @return resource containing folder name.
+     */
     protected abstract String getFolderName(String operation);
 
 }
