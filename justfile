@@ -10,7 +10,7 @@ build-project:
 
 # Build samples
 build-samples:
-  ./mvnw clean package -f samples/spring-boot-openmapi-with-test/pom.xml -X
+  ./mvnw clean package -f samples/pom.xml
 
 # Build everything
 build-all: build-project build-samples
