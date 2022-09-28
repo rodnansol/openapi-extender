@@ -1,0 +1,27 @@
+= OpenAPI Extender Documentation
+:stylesheet: rodnansol.css
+:doctype: book
+:toc: left
+
+include::project-overview.adoc[]
+
+== Motivation
+
+== Goals
+
+== Flows and logic
+[plantuml, target=output-file-name, format=png]
+....
+@startuml
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+@enduml
+....
+
+

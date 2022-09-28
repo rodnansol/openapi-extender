@@ -1,0 +1,26 @@
+extends: base
+page:
+  layout: portrait
+  margin: [0.75in, 1in, 0.75in, 1in]
+  size: Letter
+base:
+  font-color: #333333
+  font-family: Times-Roman
+  font-size: 12
+  line-height-length: 17
+  line-height: $base-line-height-length / $base-font-size
+role:
+  removed:
+    font-style: italic
+    text-decoration: line-through
+    text-decoration-color: #FF0000
+heading:
+  font-color: #262626
+  font-size: 17
+  font-style: bold
+  line-height: 1.2
+  margin-bottom: 10
+link:
+  font-color: #002FA7
+list:
+  indent: $base-font-size * 1.5
