@@ -11,6 +11,7 @@
         <module>openapi-extender-resource-generator</module>
         <module>openapi-extender-spring-test</module>
         <module>openapi-extender-springdoc</module>
+        <module>openapi-extender-restassured</module>
     </modules>
 
     <properties>
@@ -43,6 +44,7 @@
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <checkstyle.version>10.3.3</checkstyle.version>
         <assertj-core.version>3.22.0</assertj-core.version>
+        <rest-assured.version>5.2.0</rest-assured.version>
     </properties>
 
     <!--Release Stuff-->
@@ -177,6 +179,12 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-params</artifactId>
                 <version>${junit-jupiter-params.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>${rest-assured.version}</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
