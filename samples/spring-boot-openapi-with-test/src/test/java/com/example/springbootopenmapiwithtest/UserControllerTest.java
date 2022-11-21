@@ -29,7 +29,7 @@ class UserControllerTest {
         void getUser_isOk() throws Exception {
             mockMvc.perform(get("/user"))
                 .andExpect(status().isOk())
-                .andDo(result -> documentResponse("getUser", "Standard response").handle(result));
+                .andDo(result -> documentResponse().handle(result));
         }
 
         @Test
@@ -62,8 +62,8 @@ class UserControllerTest {
             UserController.UserRequest userRequest = new UserController.UserRequest("alex123", "password123", "password12", "Alex King");
             mockMvc.perform(post("/user").contentType(MediaType.APPLICATION_JSON).content(asJsonString(userRequest)))
                 .andExpect(status().isUnprocessableEntity())
-                .andDo(result -> documentResponse("postUser", "When passwords does not match").handle(result))
-                .andDo(result -> documentRequest("postUser", "Will throw error").handle(result));
+                .andDo(result -> documentResponse().handle(result))
+                .andDo(result -> documentRequest().handle(result));
         }
 
         @Test

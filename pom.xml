@@ -36,6 +36,7 @@
         <checkstyle.version>10.3.3</checkstyle.version>
 
         <springdoc-openapi-ui.version>1.6.11</springdoc-openapi-ui.version>
+        <spring-web.version>5.3.22</spring-web.version>
         <spring-test.version>5.3.22</spring-test.version>
         <jackson-core.version>2.13.4.1</jackson-core.version>
         <jackson-dataformat-xml.version>2.13.4</jackson-dataformat-xml.version>
@@ -43,6 +44,7 @@
         <slf4j-api.version>1.7.33</slf4j-api.version>
         <javax.servlet-api.version>4.0.0</javax.servlet-api.version>
         <swagger-models.version>2.0.0</swagger-models.version>
+        <swagger-annotations.version>2.0.0</swagger-annotations.version>
         <commons-io.version>2.11.0</commons-io.version>
         <junit-bom.version>5.9.0</junit-bom.version>
         <assertj-core.version>3.22.0</assertj-core.version>
@@ -131,6 +133,12 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>[${swagger-annotations.version},)</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
@@ -140,6 +148,12 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring-web.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
