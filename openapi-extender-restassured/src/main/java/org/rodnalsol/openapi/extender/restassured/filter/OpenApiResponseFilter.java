@@ -8,8 +8,8 @@ import io.restassured.specification.FilterableResponseSpecification;
 import java.io.IOException;
 
 import org.rodnalsol.openapi.extender.restassured.exception.OpenApiFilterException;
-import org.rodnansol.generator.ApiResponseExampleFileOutputResourceGenerator;
-import org.rodnansol.generator.ReportParams;
+import org.rodnansol.openapi.extender.generator.ApiResponseExampleFileOutputResourceGenerator;
+import org.rodnansol.openapi.extender.generator.ReportParams;
 
 /**
  * Rest assured filter class for generating OpenAPI response example.

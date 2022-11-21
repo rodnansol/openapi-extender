@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
     <version>999-SNAPSHOT</version>
     <modules>
-        <module>openapi-extender</module>
+        <module>openapi-extender-swagger-core</module>
         <module>openapi-extender-resource-generator</module>
         <module>openapi-extender-spring-test</module>
         <module>openapi-extender-springdoc</module>
@@ -86,7 +86,7 @@
             </dependency>
             <dependency>
                 <groupId>org.rodnansol</groupId>
-                <artifactId>openapi-extender</artifactId>
+                <artifactId>openapi-extender-swagger-core</artifactId>
                 <version>${project.version}</version>
                 <scope>provided</scope>
             </dependency>
@@ -273,7 +273,7 @@
                 <executions>
                     <execution>
                         <id>install-hooks</id>
-                        <phase>process-resources</phase>
+                        <phase>initialize</phase>
                         <goals>
                             <goal>install</goal>
                         </goals>

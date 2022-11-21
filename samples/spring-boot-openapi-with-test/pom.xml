@@ -6,12 +6,11 @@
         <artifactId>openapi-extender-samples</artifactId>
         <groupId>org.rodnansol</groupId>
         <version>999-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>com.example</groupId>
     <artifactId>spring-boot-openapi-with-test</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-openapi-with-test</name>
-    <description>spring-boot-openapi-with-test</description>
+    <name>OpenAPI Extender - Spring Boot SpringDoc Sample</name>
     <properties>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>

@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>org.rodnansol</groupId>
-            <artifactId>openapi-extender</artifactId>
+            <artifactId>openapi-extender-swagger-core</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
