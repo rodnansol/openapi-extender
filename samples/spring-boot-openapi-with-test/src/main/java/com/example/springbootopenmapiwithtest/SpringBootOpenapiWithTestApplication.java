@@ -1,8 +1,8 @@
 package com.example.springbootopenmapiwithtest;
 
-import org.rodnansol.springdoc.ApiResponseAndExampleCustomizer;
-import org.rodnansol.springdoc.ExampleResourceReaderBean;
-import org.rodnansol.springdoc.OpenApiExampleExtenderCustomizer;
+import org.rodnansol.openapi.extender.springdoc.ApiResponseAndExampleCustomizer;
+import org.rodnansol.openapi.extender.springdoc.ExampleResourceReaderBean;
+import org.rodnansol.openapi.extender.springdoc.OpenApiExampleExtenderCustomizer;
 import org.springdoc.core.customizers.OpenApiCustomiser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

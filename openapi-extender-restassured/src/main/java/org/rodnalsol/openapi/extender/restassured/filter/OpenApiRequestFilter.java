@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.rodnalsol.openapi.extender.restassured.exception.OpenApiFilterException;
-import org.rodnansol.generator.ReportParams;
-import org.rodnansol.generator.RequestBodyExampleFileOutputResourceGenerator;
+import org.rodnansol.openapi.extender.generator.ReportParams;
+import org.rodnansol.openapi.extender.generator.RequestBodyExampleFileOutputResourceGenerator;
 
 /**
  * Rest assured filter class for generating OpenAPI request example.
