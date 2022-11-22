@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
+import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 
 /**
@@ -74,7 +75,7 @@ public class ApiResponseDocumentReporter implements ResultHandler {
                 HandlerMethod handler = (HandlerMethod) result.getHandler();
                 if (handler != null && handler.getMethod() != null) {
                     Operation operationAnnotation = handler.getMethod().getAnnotation(Operation.class);
-                    finalOperation = operationAnnotation != null && operationAnnotation.operationId() != null ? operationAnnotation.operationId() : handler.getMethod().getName();
+                    finalOperation = operationAnnotation != null && StringUtils.hasText(operationAnnotation.operationId()) ? operationAnnotation.operationId() : handler.getMethod().getName();
                 }
             }
         }
