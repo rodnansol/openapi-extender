@@ -11,7 +11,6 @@ public final class MockMvcOpenApiDocumentation {
     /**
      * Creates an {@link ApiResponseDocumentReporter} with the incoming operation and description.
      *
-     * @param name name/key of the example.
      * @return {@link ApiResponseDocumentReporter} instance.
      */
     public static ApiResponseDocumentReporter documentResponse() {
