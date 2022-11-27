@@ -19,6 +19,14 @@ public class ApiResponseDocumentReporter implements ResultHandler {
     private final String name;
     private final String description;
 
+    public ApiResponseDocumentReporter() {
+        this(null, null, null, ApiResponseExampleFileOutputResourceGenerator.DEFAULT_OUTPUT_DIRECTORY);
+    }
+
+    public ApiResponseDocumentReporter(String name) {
+        this(null, name, null, ApiResponseExampleFileOutputResourceGenerator.DEFAULT_OUTPUT_DIRECTORY);
+    }
+
     public ApiResponseDocumentReporter(String operation, String name) {
         this(operation, name, null, ApiResponseExampleFileOutputResourceGenerator.DEFAULT_OUTPUT_DIRECTORY);
     }
@@ -28,22 +36,40 @@ public class ApiResponseDocumentReporter implements ResultHandler {
     }
 
     public ApiResponseDocumentReporter(String operation, String name, String description, String outputDirectory) {
+        this(operation, name, description, new ApiResponseExampleFileOutputResourceGenerator(outputDirectory));
+    }
+
+    ApiResponseDocumentReporter(String operation, String name, String description, ApiResponseExampleFileOutputResourceGenerator apiResponseExampleDocumenter) {
         this.operation = operation;
         this.name = name;
         this.description = description;
-        this.apiResponseExampleDocumenter = new ApiResponseExampleFileOutputResourceGenerator(outputDirectory);
+        this.apiResponseExampleDocumenter = apiResponseExampleDocumenter;
     }
 
     @Override
     public void handle(MvcResult result) {
         try {
-            MockHttpServletResponse response = result.getResponse();
-            ReportParams params = new ReportParams(operation, name, response.getStatus(), response.getContentType(), response.getContentAsByteArray());
-            params.setDescription(description);
+            ReportParams params = createReportParamsByResult(result);
             apiResponseExampleDocumenter.generateResources(params);
         } catch (Exception e) {
             throw new OpenApiExtenderResultHandlerException("Error during documenting response", e);
         }
+    }
+
+    private ReportParams createReportParamsByResult(MvcResult result) {
+        String finalOperation = MvcResultReader.getOperationName(operation, result);
+        MockHttpServletResponse response = result.getResponse();
+        String finalName = getFinalName(finalOperation, response);
+        ReportParams params = new ReportParams(finalOperation, finalName, response.getStatus(), response.getContentType(), response.getContentAsByteArray());
+        params.setDescription(description);
+        return params;
+    }
+
+    private String getFinalName(String finalOperation, MockHttpServletResponse response) {
+        if (name != null) {
+            return name;
+        }
+        return finalOperation + "-" + response.getStatus();
     }
 
 }
