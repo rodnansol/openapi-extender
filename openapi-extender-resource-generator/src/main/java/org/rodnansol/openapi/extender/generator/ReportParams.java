@@ -1,5 +1,8 @@
 package org.rodnansol.openapi.extender.generator;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * Class to be used as the report parameter.
  */
@@ -48,4 +51,18 @@ public class ReportParams implements ResourceGeneratorParams {
         return content;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReportParams that = (ReportParams) o;
+        return status == that.status && Objects.equals(operation, that.operation) && Objects.equals(name, that.name) && Objects.equals(contentType, that.contentType) && Arrays.equals(content, that.content) && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(operation, name, status, contentType, description);
+        result = 31 * result + Arrays.hashCode(content);
+        return result;
+    }
 }
