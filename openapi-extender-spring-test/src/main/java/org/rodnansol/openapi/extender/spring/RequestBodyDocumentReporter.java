@@ -1,6 +1,5 @@
 package org.rodnansol.openapi.extender.spring;
 
-import io.swagger.v3.oas.annotations.Operation;
 import org.rodnansol.openapi.extender.generator.ReportParams;
 import org.rodnansol.openapi.extender.generator.RequestBodyExampleFileOutputResourceGenerator;
 import org.slf4j.Logger;
@@ -9,8 +8,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
-import org.springframework.util.StringUtils;
-import org.springframework.web.method.HandlerMethod;
 
 /**
  * Result handler implementation that documents the request of the incoming MvcResult.
