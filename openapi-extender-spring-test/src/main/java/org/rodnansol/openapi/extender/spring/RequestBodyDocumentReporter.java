@@ -52,7 +52,7 @@ public class RequestBodyDocumentReporter implements ResultHandler {
         try {
             MockHttpServletResponse response = result.getResponse();
             MockHttpServletRequest request = result.getRequest();
-            String finalOperation = getOperationName(result);
+            String finalOperation = MvcResultReader.getOperationName(operation, result);
             String finalName = getFinalName(finalOperation, response);
             ReportParams params = new ReportParams(finalOperation, finalName, response.getStatus(), request.getContentType(), request.getContentAsByteArray());
             params.setDescription(description);
@@ -67,22 +67,6 @@ public class RequestBodyDocumentReporter implements ResultHandler {
             return name;
         }
         return finalOperation + "-" + response.getStatus();
-    }
-
-    private String getOperationName(MvcResult result) {
-        String finalOperation = null;
-        if (operation != null) {
-            finalOperation = operation;
-        } else {
-            if (result.getHandler() instanceof HandlerMethod) {
-                HandlerMethod handler = (HandlerMethod) result.getHandler();
-                if (handler != null && handler.getMethod() != null) {
-                    Operation operationAnnotation = handler.getMethod().getAnnotation(Operation.class);
-                    finalOperation = operationAnnotation != null && StringUtils.hasText(operationAnnotation.operationId()) ? operationAnnotation.operationId() : handler.getMethod().getName();
-                }
-            }
-        }
-        return finalOperation;
     }
 
 }

@@ -39,24 +39,33 @@ public class ApiResponseDocumentReporter implements ResultHandler {
     }
 
     public ApiResponseDocumentReporter(String operation, String name, String description, String outputDirectory) {
+        this(operation, name, description, new ApiResponseExampleFileOutputResourceGenerator(outputDirectory));
+    }
+
+    ApiResponseDocumentReporter(String operation, String name, String description, ApiResponseExampleFileOutputResourceGenerator apiResponseExampleDocumenter) {
         this.operation = operation;
         this.name = name;
         this.description = description;
-        this.apiResponseExampleDocumenter = new ApiResponseExampleFileOutputResourceGenerator(outputDirectory);
+        this.apiResponseExampleDocumenter = apiResponseExampleDocumenter;
     }
 
     @Override
     public void handle(MvcResult result) {
         try {
-            MockHttpServletResponse response = result.getResponse();
-            String finalOperation = getOperationName(result);
-            String finalName = getFinalName(finalOperation, response);
-            ReportParams params = new ReportParams(finalOperation, finalName, response.getStatus(), response.getContentType(), response.getContentAsByteArray());
-            params.setDescription(description);
+            ReportParams params = createReportParamsByResult(result);
             apiResponseExampleDocumenter.generateResources(params);
         } catch (Exception e) {
             throw new OpenApiExtenderResultHandlerException("Error during documenting response", e);
         }
+    }
+
+    private ReportParams createReportParamsByResult(MvcResult result) {
+        String finalOperation = MvcResultReader.getOperationName(operation, result);
+        MockHttpServletResponse response = result.getResponse();
+        String finalName = getFinalName(finalOperation, response);
+        ReportParams params = new ReportParams(finalOperation, finalName, response.getStatus(), response.getContentType(), response.getContentAsByteArray());
+        params.setDescription(description);
+        return params;
     }
 
     private String getFinalName(String finalOperation, MockHttpServletResponse response) {
@@ -64,22 +73,6 @@ public class ApiResponseDocumentReporter implements ResultHandler {
             return name;
         }
         return finalOperation + "-" + response.getStatus();
-    }
-
-    private String getOperationName(MvcResult result) {
-        String finalOperation = null;
-        if (operation != null) {
-            finalOperation = operation;
-        } else {
-            if (result.getHandler() instanceof HandlerMethod) {
-                HandlerMethod handler = (HandlerMethod) result.getHandler();
-                if (handler != null && handler.getMethod() != null) {
-                    Operation operationAnnotation = handler.getMethod().getAnnotation(Operation.class);
-                    finalOperation = operationAnnotation != null && StringUtils.hasText(operationAnnotation.operationId()) ? operationAnnotation.operationId() : handler.getMethod().getName();
-                }
-            }
-        }
-        return finalOperation;
     }
 
 }
