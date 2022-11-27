@@ -23,7 +23,8 @@
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <springdoc-openapi-ui.version>1.6.11</springdoc-openapi-ui.version>
         <spring-test.version>5.3.22</spring-test.version>
-        <jackson-core.version>2.13.4</jackson-core.version>
+        <jackson-core.version>2.13.4.1</jackson-core.version>
+        <jackson-dataformat-xml.version>2.13.4</jackson-dataformat-xml.version>
         <logback-classic.version>1.2.11</logback-classic.version>
         <slf4j-api.version>1.7.33</slf4j-api.version>
         <javax.servlet-api.version>4.0.0</javax.servlet-api.version>
@@ -123,7 +124,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.dataformat</groupId>
                 <artifactId>jackson-dataformat-xml</artifactId>
-                <version>${jackson-core.version}</version>
+                <version>${jackson-dataformat-xml.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
