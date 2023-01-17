@@ -12,15 +12,29 @@
         <module>openapi-extender-spring-test</module>
         <module>openapi-extender-springdoc</module>
         <module>openapi-extender-restassured</module>
+        <module>openapi-extender-report</module>
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <project.copyright>Apache-2.0</project.copyright>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
+        <editorconfig-maven-plugin.version>0.1.1</editorconfig-maven-plugin.version>
+        <jreleaser-maven-plugin.version>1.4.0</jreleaser-maven-plugin.version>
+        <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
+        <maven-release-plugin.version>3.0.0-M6</maven-release-plugin.version>
+        <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+        <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
+        <plexus-utils.version>3.5.0</plexus-utils.version>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+        <checkstyle.version>10.3.3</checkstyle.version>
+
         <springdoc-openapi-ui.version>1.6.11</springdoc-openapi-ui.version>
         <spring-test.version>5.3.22</spring-test.version>
         <jackson-core.version>2.13.4.1</jackson-core.version>
@@ -31,27 +45,28 @@
         <swagger-models.version>2.0.0</swagger-models.version>
         <commons-io.version>2.11.0</commons-io.version>
         <junit-bom.version>5.9.0</junit-bom.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
+        <assertj-core.version>3.22.0</assertj-core.version>
+        <rest-assured.version>5.2.0</rest-assured.version>
         <mockito-core.version>4.6.1</mockito-core.version>
         <mockito-junit-jupiter.version>4.6.1</mockito-junit-jupiter.version>
         <hamcrest-all.version>1.3</hamcrest-all.version>
         <junit-jupiter-params.version>5.8.1</junit-jupiter-params.version>
-        <editorconfig-maven-plugin.version>0.1.1</editorconfig-maven-plugin.version>
-        <jreleaser-maven-plugin.version>1.1.0</jreleaser-maven-plugin.version>
-        <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
-        <maven-release-plugin.version>3.0.0-M6</maven-release-plugin.version>
-        <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
-        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-        <checkstyle.version>10.3.3</checkstyle.version>
-        <assertj-core.version>3.22.0</assertj-core.version>
-        <rest-assured.version>5.2.0</rest-assured.version>
+
+        <jreleaser-github-release.draft>false</jreleaser-github-release.draft>
+        <jreleaser-nexus-deploy.active>ALWAYS</jreleaser-nexus-deploy.active>
+
     </properties>
+
+    <organization>
+        <name>Rodnan Sol</name>
+        <url>https://www.rodnansol.org/</url>
+    </organization>
 
     <!--Release Stuff-->
     <name>OpenAPI Extender - Parent</name>
     <description>OpenAPI Extender</description>
     <url>https://github.com/rodnansol/openapi-extender</url>
+    <inceptionYear>2022</inceptionYear>
     <developers>
         <developer>
             <id>nandor.holozsnyak</id>
@@ -88,6 +103,24 @@
             <dependency>
                 <groupId>org.rodnansol</groupId>
                 <artifactId>openapi-extender-swagger-core</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.rodnansol</groupId>
+                <artifactId>openapi-extender-spring-test</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.rodnansol</groupId>
+                <artifactId>openapi-extender-springdoc</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.rodnansol</groupId>
+                <artifactId>openapi-extender-restassured</artifactId>
                 <version>${project.version}</version>
                 <scope>provided</scope>
             </dependency>
@@ -208,16 +241,18 @@
                     <groupId>org.ec4j.maven</groupId>
                     <artifactId>editorconfig-maven-plugin</artifactId>
                     <version>${editorconfig-maven-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.plexus</groupId>
+                            <artifactId>plexus-utils</artifactId>
+                            <version>${plexus-utils.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>com.rudikershaw.gitbuildhook</groupId>
                     <artifactId>git-build-hook-maven-plugin</artifactId>
                     <version>${git-build-hook-maven-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>${maven-release-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -228,6 +263,26 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>prepare</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -295,30 +350,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report-aggregate</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report-aggregate</goal>
-                        </goals>
-                        <configuration>
-                            <dataFileIncludes>
-                                <dataFileInclude>**/jacoco.exec</dataFileInclude>
-                            </dataFileIncludes>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -340,10 +371,6 @@
             <id>release</id>
             <properties>
                 <ossrh.url>https://s01.oss.sonatype.org</ossrh.url>
-                <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
-                <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-                <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
-                <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
             </properties>
             <distributionManagement>
                 <snapshotRepository>
@@ -358,34 +385,28 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                        <configuration>
-                            <tagNameFormat>v@{project.version}</tagNameFormat>
-                            <scmCommentPrefix>release:</scmCommentPrefix>
-                        </configuration>
-                    </plugin>
-                    <plugin>
+                        <inherited>false</inherited>
                         <groupId>org.jreleaser</groupId>
                         <artifactId>jreleaser-maven-plugin</artifactId>
                         <version>${jreleaser-maven-plugin.version}</version>
                         <configuration>
                             <jreleaser>
                                 <signing>
-                                    <active>NEVER</active>
+                                    <active>ALWAYS</active>
+                                    <armored>true</armored>
                                 </signing>
                                 <announce>
                                     <twitter>
                                         <active>ALWAYS</active>
                                         <connectTimeout>20</connectTimeout>
                                         <readTimeout>60</readTimeout>
-                                        <status>🚀 OpenAPI Extender {{projectVersion}} has been released! {{releaseNotesUrl}}</status>
+                                        <status>🚀 OpenAPI Extender {{projectVersion}} has been released! #openapi #spring #springboot {{releaseNotesUrl}}</status>
                                     </twitter>
                                 </announce>
                                 <release>
                                     <github>
-                                        <tagName>v${project.version}</tagName>
-                                        <releaseName>Release ${project.version}</releaseName>
+                                        <draft>${jreleaser-github-release.draft}</draft>
+                                        <discussionCategoryName>Announcements</discussionCategoryName>
                                         <changelog>
                                             <formatted>ALWAYS</formatted>
                                             <format>- {{commitShortHash}} {{commitTitle}}</format>
@@ -400,68 +421,53 @@
                                         </changelog>
                                     </github>
                                 </release>
+                                <deploy>
+                                    <maven>
+                                        <nexus2>
+                                            <maven-central>
+                                                <active>${jreleaser-nexus-deploy.active}</active>
+                                                <url>${ossrh.url}/service/local</url>
+                                                <snapshotUrl>${ossrh.url}/content/repositories/snapshot</snapshotUrl>
+                                                <closeRepository>true</closeRepository>
+                                                <releaseRepository>true</releaseRepository>
+                                                <stagingRepositories>target/staging-deploy</stagingRepositories>
+                                            </maven-central>
+                                        </nexus2>
+                                    </maven>
+                                </deploy>
                             </jreleaser>
+                            <projectCopyright>Apache-2.0</projectCopyright>
                         </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${nexus-staging-maven-plugin.version}</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>${ossrh.url}</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
+                                <configuration>
+                                    <additionalJOption>-Xdoclint:none</additionalJOption>
+                                </configuration>
                             </execution>
                         </executions>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${maven-gpg-plugin.version}</version>
+                        <artifactId>maven-source-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
+                                <id>attach-sources</id>
                                 <goals>
-                                    <goal>sign</goal>
+                                    <goal>jar</goal>
                                 </goals>
+                                <configuration>
+                                    <attach>true</attach>
+                                </configuration>
                             </execution>
                         </executions>
-                        <configuration>
-                            <gpgArguments>
-                                <arg>--pinentry-mode</arg>
-                                <arg>loopback</arg>
-                            </gpgArguments>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>

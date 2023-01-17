@@ -23,13 +23,38 @@ dependencies:
 updates:
   mvn versions:display-dependency-updates > updates.txt
 
-deploy-to-ossrh:
-  mvn -Prelease clean verify deploy
+# Dry full-release
+dry-release:
+  mvn clean -Prelease deploy -DaltDeploymentRepository=local::file:./target/staging-deploy
+  mvn jreleaser:full-release -Prelease -Djreleaser.dry.run
 
-full-release:
-  mvn release:prepare release:perform -Prelease -DreleaseVersion=0.1.1 -DdevelopmentVersion=999-SNAPSHOT
-
-jrelease:
-  mvn versions:set -DnewVersion=0.1.1.1
-  mvn -Prelease jreleaser:release -N
+# Snapshot release
+snapshot-release version:
+  mvn versions:set -DnewVersion={{version}}
+  mvn clean -Prelease deploy -DaltDeploymentRepository=local::file:./target/staging-deploy
+  mvn jreleaser:full-release -Prelease -N
   mvn versions:set -DnewVersion=999-SNAPSHOT
+
+# Draft release
+draft-release version:
+  mvn versions:set -DnewVersion={{version}}
+  mvn jreleaser:release -Prelease -Djreleaser-github-release.draft=true -Djreleaser-nexus-deploy.active=NEVER -N
+  mvn versions:set -DnewVersion=999-SNAPSHOT
+
+# Full-release
+full-release version:
+  mvn versions:set -DnewVersion={{version}}
+  mvn clean -Prelease deploy -DaltDeploymentRepository=local::file:./target/staging-deploy
+  mvn jreleaser:full-release -Prelease N
+  mvn versions:set -DnewVersion=999-SNAPSHOT
+
+# Announce release
+announce-release version:
+  mvn versions:set -DnewVersion={{version}}
+  #mvn clean -Prelease deploy -DaltDeploymentRepository=local::file:./target/staging-deploy
+  mvn jreleaser:announce -Prelease -N
+  mvn versions:set -DnewVersion=999-SNAPSHOT
+
+# JReleaser config
+dry-release-config:
+  mvn -Prelease jreleaser:config -Djreleaser.dry.run
