@@ -20,6 +20,14 @@ public class RequestBodyDocumentReporter implements ResultHandler {
     private final String name;
     private final String description;
 
+    public RequestBodyDocumentReporter() {
+        this(null, null, null, RequestBodyExampleFileOutputResourceGenerator.DEFAULT_OUTPUT_DIRECTORY);
+    }
+
+    public RequestBodyDocumentReporter(String name) {
+        this(null, name, null, RequestBodyExampleFileOutputResourceGenerator.DEFAULT_OUTPUT_DIRECTORY);
+    }
+
     public RequestBodyDocumentReporter(String operation, String name) {
         this(operation, name, null, RequestBodyExampleFileOutputResourceGenerator.DEFAULT_OUTPUT_DIRECTORY);
     }
@@ -41,12 +49,21 @@ public class RequestBodyDocumentReporter implements ResultHandler {
         try {
             MockHttpServletResponse response = result.getResponse();
             MockHttpServletRequest request = result.getRequest();
-            ReportParams params = new ReportParams(operation, name, response.getStatus(), request.getContentType(), request.getContentAsByteArray());
+            String finalOperation = MvcResultReader.getOperationName(operation, result);
+            String finalName = getFinalName(finalOperation, response);
+            ReportParams params = new ReportParams(finalOperation, finalName, response.getStatus(), request.getContentType(), request.getContentAsByteArray());
             params.setDescription(description);
             requestBodyExampleDocumenter.generateResources(params);
         } catch (Exception e) {
             throw new OpenApiExtenderResultHandlerException("Error during documenting request body", e);
         }
+    }
+
+    private String getFinalName(String finalOperation, MockHttpServletResponse response) {
+        if (name != null) {
+            return name;
+        }
+        return finalOperation + "-" + response.getStatus();
     }
 
 }

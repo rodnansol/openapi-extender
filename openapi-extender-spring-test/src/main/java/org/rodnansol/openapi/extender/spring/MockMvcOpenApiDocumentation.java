@@ -11,6 +11,25 @@ public final class MockMvcOpenApiDocumentation {
     /**
      * Creates an {@link ApiResponseDocumentReporter} with the incoming operation and description.
      *
+     * @return {@link ApiResponseDocumentReporter} instance.
+     */
+    public static ApiResponseDocumentReporter documentResponse() {
+        return new ApiResponseDocumentReporter();
+    }
+
+    /**
+     * Creates an {@link ApiResponseDocumentReporter} with the incoming operation and description.
+     *
+     * @param name name/key of the example.
+     * @return {@link ApiResponseDocumentReporter} instance.
+     */
+    public static ApiResponseDocumentReporter documentResponse(String name) {
+        return new ApiResponseDocumentReporter(name);
+    }
+
+    /**
+     * Creates an {@link ApiResponseDocumentReporter} with the incoming operation and description.
+     *
      * @param operation operation's name.
      * @param name      name/key of the example.
      * @return {@link ApiResponseDocumentReporter} instance.
@@ -42,6 +61,25 @@ public final class MockMvcOpenApiDocumentation {
      */
     public static ApiResponseDocumentReporter documentResponse(String operation, String name, String description, String outputDirectory) {
         return new ApiResponseDocumentReporter(operation, name, description, outputDirectory);
+    }
+
+    /**
+     * Creates an {@link RequestBodyDocumentReporter} with the incoming operation and description.
+     *
+     * @return {@link RequestBodyDocumentReporter} instance.
+     */
+    public static RequestBodyDocumentReporter documentRequest() {
+        return new RequestBodyDocumentReporter();
+    }
+
+    /**
+     * Creates an {@link RequestBodyDocumentReporter} with the incoming operation and description.
+     *
+     * @param name name/key of the example.
+     * @return {@link RequestBodyDocumentReporter} instance.
+     */
+    public static RequestBodyDocumentReporter documentRequest(String name) {
+        return new RequestBodyDocumentReporter(name);
     }
 
     /**
