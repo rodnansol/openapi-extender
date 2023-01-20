@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Class that initiates the injection to the {@link Operation} class based on different resource laoding strategies.
+ *
  * @author nandorholozsnyak
  * @since 0.3.1
  */
@@ -41,18 +43,24 @@ public class OperationDescriptionLoaderService {
     }
 
     /**
-     * @param operation
-     * @param handlerMethod
+     * Seeks and injects resource content for the given operation's description if the resources ar available.
+     *
+     * @param resourceBasePath resources base path.
+     * @param extension        resource extension.
+     * @param operation        operation to examine and enhance.
+     * @param handlerMethod    operation's Spring based handler method.
      */
     void injectDescriptions(String resourceBasePath, String extension, Operation operation, HandlerMethod handlerMethod) {
         Assert.notNull(operation, "operation is NULL");
         Assert.notNull(handlerMethod, "handlerMethod is NULL");
         String operationId = operation.getOperationId();
-        LOGGER.info("Populating description for operation with id:[{}]", operationId);
         if (StringUtils.isBlank(operation.getDescription())) {
+            LOGGER.debug("Populating description for operation with id:[{}]", operationId);
             for (ResourceLoader resourceLoader : descriptionResourceLoaders) {
+                LOGGER.trace("Running [{}] to find 'description' resource for [{}]", resourceLoader, operationId);
                 byte[] bytes = resourceLoader.loadResource(new LoadResourceCommand(resourceBasePath, extension, operation, handlerMethod));
                 if (bytes != null && bytes.length > 0) {
+                    LOGGER.trace("[{}] found resources, operation's description with id:[{}] is being overwritten", resourceLoader, operationId);
                     operation.setDescription(new String(bytes, resourceCharset));
                     break;
                 } else {
@@ -65,20 +73,24 @@ public class OperationDescriptionLoaderService {
     }
 
     /**
-     * @param resourceBasePath
-     * @param extension
-     * @param operation
-     * @param handlerMethod
+     * Seeks and injects resource content for the given operation's description if the resources ar available.
+     *
+     * @param resourceBasePath resources base path.
+     * @param extension        resource extension.
+     * @param operation        operation to examine and enhance.
+     * @param handlerMethod    operation's Spring based handler method.
      */
-    void injectSummaries(String resourceBasePath, String extension, Operation operation, HandlerMethod handlerMethod) {
+    void injectSummary(String resourceBasePath, String extension, Operation operation, HandlerMethod handlerMethod) {
         Assert.notNull(operation, "operation is NULL");
         Assert.notNull(handlerMethod, "handlerMethod is NULL");
         String operationId = operation.getOperationId();
-        LOGGER.info("Populating summary for operation with id:[{}]", operationId);
         if (StringUtils.isBlank(operation.getSummary())) {
+            LOGGER.debug("Populating summary for operation with id:[{}]", operationId);
             for (ResourceLoader resourceLoader : summaryResourceLoaders) {
+                LOGGER.trace("Running [{}] to find 'summary' resource for [{}]", resourceLoader, operationId);
                 byte[] bytes = resourceLoader.loadResource(new LoadResourceCommand(resourceBasePath, extension, operation, handlerMethod));
                 if (bytes != null && bytes.length > 0) {
+                    LOGGER.trace("[{}] found resources, operation's summary with id:[{}] is being overwritten", resourceLoader, operationId);
                     operation.setSummary(new String(bytes, resourceCharset));
                     break;
                 } else {

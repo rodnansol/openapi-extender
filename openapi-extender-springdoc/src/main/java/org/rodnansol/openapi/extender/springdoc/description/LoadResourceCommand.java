@@ -4,6 +4,8 @@ import io.swagger.v3.oas.models.Operation;
 import org.springframework.web.method.HandlerMethod;
 
 /**
+ * Class storing all the necessary information to load a resource based on {@link Operation} or {@link HandlerMethod}
+ *
  * @author nandorholozsnyak
  * @since 0.3.1
  */

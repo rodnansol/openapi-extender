@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>openapi-extender-report</artifactId>
-    <name>Spring Configuration Property Documenter - Report module</name>
+    <name> OpenAPI Extender - Report module</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

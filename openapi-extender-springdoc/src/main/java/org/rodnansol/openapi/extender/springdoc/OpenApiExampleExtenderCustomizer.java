@@ -9,6 +9,9 @@ import org.springdoc.core.customizers.OpenApiCustomiser;
 
 /**
  * Class that customizes the {@link OpenAPI} object with the examples from the context.
+ *
+ * @author nandorholozsnyak
+ * @since 0.2.0
  */
 public class OpenApiExampleExtenderCustomizer implements OpenApiCustomiser {
 
