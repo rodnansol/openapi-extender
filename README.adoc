@@ -14,12 +14,17 @@ endif::[]
 :toclevels: 4
 
 image::banner.png[banner.png]
+[.text-center]
+image:https://img.shields.io/maven-central/v/org.rodnansol/openapi-extender-parent.svg[Maven Central]
+image:https://img.shields.io/badge/License-Apache_2.0-blue.svg[Apache 2.0]
+image:https://img.shields.io/twitter/url/https/twitter.com/rodnansol.svg?style=social&label=Follow%20%40RodnanSol[]
+image:https://dcbadge.vercel.app/api/server/USyh6XUjvP[Discord]
 
 toc::[]
 
 == Motivation
 
-Writing proper OpenAPI documentations are time consuming, if you really
+Writing proper OpenAPI documentations are time-consuming, if you really
 want to make sure your clients are understanding the API itself, massive
 amount of summaries and examples should be provided, not mandatory, but
 if you are on the other side of the API, you might be also happier if an

@@ -425,6 +425,10 @@
                                         <readTimeout>60</readTimeout>
                                         <status>🚀 OpenAPI Extender {{projectVersion}} has been released! #openapi #spring #springboot {{releaseNotesUrl}}</status>
                                     </twitter>
+                                    <discord>
+                                        <active>ALWAYS</active>
+                                        <message>🚀 OpenAPI Extender {{projectNameCapitalized}} {{projectVersion}} has been released! {{releaseNotesUrl}}</message>
+                                    </discord>
                                 </announce>
                                 <release>
                                     <github>
