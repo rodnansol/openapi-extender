@@ -1,0 +1,96 @@
+[#extra-summarie]
+==== Summaries and descriptions
+
+Developers tend to provide summaries and descriptions for their API endpoints/operations. Sometimes these descriptor attributes are brief, really tells you nothing about the whole operation, and you have to dig deeper, you may ask your co-worker about it, or if it is a public API you may read more about it somewhere.
+
+These descriptors are not always fun to write, if you are not writing them directly into an OpenAPI YAML or JSON file, you may end up in the production code which on different Java versions can be ugly, just to give you some examples.
+
+.With Java 8
+[source,java]
+----
+@RestController
+interface UserController {
+
+    @Operation(summary = "Registers/creates a new user",
+        description = "This endpoint is going to create a new user in the system, but it has to pass the following validations:\n" +
+            "- The e-mail must be unique, if not unique the system will reject the request\n" +
+            "- The username is mandatory and it has to be unique as well\n" +
+            "If any of the business rules are violated an HTTP 422 will be returned with the list of violations")
+    @PostMapping(path = "/user", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    ResponseEntity postUser(@RequestBody UserRequest userRequest);
+}
+----
+
+.With Java 15+ Text Blocks
+[source,java]
+----
+@RestController
+interface UserController {
+
+    @Operation(summary = "Registers/creates a new user",
+        description = """
+            This endpoint is going to create a new user in the system, but it has to pass the following validations:
+            - The e-mail must be unique, if not unique the system will reject the request
+            - The username is mandatory and it has to be unique as well
+            If any of the business rules are violated an HTTP 422 will be returned with the list of violations
+            """)
+    @PostMapping(path = "/user", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    ResponseEntity postUser(@RequestBody UserRequest userRequest);
+}
+----
+
+.With property file and property resolution (messages.properties) - It supports localization - *NOT* application.properties
+[source,properties]
+----
+postUser.summary=Registers/creates a new user
+postUser.description=This endpoint is going to create a new user in the system, but it has to pass the following validations: \n \
+    - The e-mail must be unique, if not unique the system will reject the request \n \
+    - The username is mandatory and it has to be unique as well \n \n \
+    If any of the business rules are violated an HTTP 422 will be returned with the list of violations
+----
+[source,java]
+----
+@RestController
+interface UserController {
+
+    @Operation(summary = "postUser.summary",description = "postUser.description")
+    @PostMapping(path = "/user", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    ResponseEntity postUser(@RequestBody UserRequest userRequest);
+}
+----
+
+.With application.properties or application.yml file - It *DOES NOT* support localization - Right now `.yml`
+[source,properties]
+----
+postUser:
+  summary: Summary from application.yml
+  description: |
+    This endpoint is going to create a new user in the system, but it has to pass the following validations:
+     - The e-mail must be unique, if not unique the system will reject the request
+     - The username is mandatory and it has to be unique as well
+    If any of the business rules are violated an HTTP 422 will be returned with the list of violations
+----
+[source,java]
+----
+@RestController
+interface UserController {
+
+    @Operation(summary = "${postUser.summary}",description = "${postUser.description}")
+    @PostMapping(path = "/user", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    ResponseEntity postUser(@RequestBody UserRequest userRequest);
+}
+----
+
+
+.Result
+All 4 does the job, but as OpenAPI is supporting CommonMark markdown formatting, we, in the Java source code and in the property/yaml files, lose the ability to properly format and preview our written documentation.
+
+image::post-user-swagger-ui.png[]
+
+=== Our solution
+
+If we keep populating any of the above-mentioned files the production code will become huge and ugly, we would like to change this way and we would like to propose another idea.
+
+As most code editors support Markdown rendering, we offer you the solution to write all the summaries and descriptions in a Markdown file under the `src/main/resources` folder, (in a specified subdirectory for example `operations`) and our tool will inject those Markdown files, during runtime, to your OpenAPI definition file.
+
+You have many options to have these files injected, here is the list of options how to configure those.
