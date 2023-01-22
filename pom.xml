@@ -31,6 +31,7 @@
         <maven-release-plugin.version>3.0.0-M6</maven-release-plugin.version>
         <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
         <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
+        <maven-deploy-plugin.version>3.0.0</maven-deploy-plugin.version>
         <plexus-utils.version>3.5.0</plexus-utils.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <checkstyle.version>10.3.3</checkstyle.version>
@@ -291,6 +292,11 @@
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
+            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
