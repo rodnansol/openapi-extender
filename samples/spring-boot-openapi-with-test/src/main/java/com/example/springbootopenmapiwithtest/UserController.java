@@ -1,13 +1,18 @@
 package com.example.springbootopenmapiwithtest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.extensions.Extension;
+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.rodnansol.openapi.extender.springdoc.description.OpenApiExtenderExtensionConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +36,18 @@ class UserController {
             return ResponseEntity.unprocessableEntity().body(new ErrorResponse("Username already exists", "Cause it went bad"));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponse("joe", "Joe Big"));
+    }
+
+    @Operation(extensions = {
+        @Extension(name = OpenApiExtenderExtensionConstants.EXTENSION_KEY,
+            properties = {
+                @ExtensionProperty(name = OpenApiExtenderExtensionConstants.DESCRIPTION_KEY, value = "operations/anotherDescription.md"),
+                @ExtensionProperty(name = OpenApiExtenderExtensionConstants.SUMMARY_KEY, value = "operations/anotherSummary.md")}
+        )
+    })
+    @PutMapping(path = "/user", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity putUser(@RequestParam(name = "id", required = false) String id) {
+        return ResponseEntity.ok(new UserResponse("joe", "Joe Big"));
     }
 
     @Data

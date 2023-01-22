@@ -16,6 +16,9 @@ import java.util.List;
 
 /**
  * Class that customizes incoming operations.
+ *
+ * @author nandorholozsnyak
+ * @since 0.2.0
  */
 public class ApiResponseAndExampleCustomizer implements OperationCustomizer {
 

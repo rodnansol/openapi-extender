@@ -1,42 +1,11 @@
-# OpenAPI Extender
+[#generated-examples]
+==== Generated examples
 
-![banner.png](banner.png)
-
-## Motivation
-
-Writing proper OpenAPI documentations are time consuming, if you really want to make sure your clients are understanding the API itself, massive amount of summaries and examples should be provided, not mandatory, but if you are on the other side of
-the API, you might be also happier if an API is verbose as possible.
-
-## Goals
-
-The goal of this project to make sure that your OpenAPI documentation is having enough extra details, that you might not want to write by yourself in the documentation, but you would like to use other, earlier written resources to fulfil these
-requirements/needs/gaps in your documentation.
-
-Developers are writing unit and integration tests on their projects, and a good test could be providing the different input and output values for a component. API developers are writing tons of integration tests for the different use cases and it
-happens sometimes that they are not giving out these tests, because of course security and privacy rules, but some output of these tests could be used to extend the already existing API.
-
-## Alternatives
-
-- [Spring's REST Docs](https://github.com/spring-projects/spring-restdocs) does something similar, but it is not heavily involved in the OpenAPI initiative.
-- [Spring REST Docs API specification Integration](https://github.com/ePages-de/restdocs-api-spec) kinda the wanted features, but it is totally test driven.
-
-## Implementation
-
-The project is split up into multiple modules to make sure the end users are not depending on some unnecessary dependencies:
-
-- [openapi-extender](openapi-extender) - Core part, that does the "heavy-lifting" that works with the OpenAPI model classes
-- [openapi-extender-resource-generator](openapi-extender-resource-generator) - Resource generator module that is generating the resource files based on different content
-- [openapi-extender-spring-test](openapi-extender-spring-test) - Spring Test extension
-- [openapi-extender-springdoc](openapi-extender-springdoc) - SpringDoc extension
-
-## Usage
-
-### Generate resources with tests
-
-<details>
-    <summary>Spring Boot SpringDoc based example</summary>
-
-```java
+.Spring Boot SpringDoc based example
+[%collapsible%]
+====
+[source,java]
+----
 
 @SpringBootApplication
 class SpringBootOpenapiWithTestApplication {
@@ -207,55 +176,59 @@ class UserControllerTest {
     }
 
 }
+----
 
-```
+After running: `./mvnw package` the following generated resources will
+pop up: image:docs/generated-files.png[generated-files.png]
 
-After running: `./mvnw package` the following generated resources will pop up:
-![generated-files.png](docs/generated-files.png)
+By default, the generated files are going to be created to the following
+paths: - `target/classes/openapi-extender/requests/` -
+`target/classes/openapi-extender/responses/`
 
-By default, the generated files are going to be created to the following paths:
-- `target/classes/openapi-extender/requests/`
-- `target/classes/openapi-extender/responses/`
+*requests/postUser_201_Creates a user.json*:
 
-**requests/postUser_201_Creates a user.json**: 
-```json
+[source,json]
+----
 {
   "username": "new-bob",
   "password": "password123",
   "passwordConfirmation": "password123",
   "fullName": "Bob Sug"
 }
-```
+----
 
-**responses/postUser_201_Successful operation.json**:
-```json
+*responses/postUser_201_Successful operation.json*:
+
+[source,json]
+----
 {
   "username" : "joe",
   "fullName" : "Joe Big"
 }
-```
+----
 
-**responses/postUser_422_When passwords does not match.json**:
-```json
+*responses/postUser_422_When passwords does not match.json*:
+
+[source,json]
+----
 {
   "message" : "Passwords must match",
   "cause" : "Cause it went bad"
 }
-```
+----
 
-</details>
+====
 
-<details>
-    <summary>Swagger UI Preview</summary>
+.Swagger UI Preview
 
-![swagger-ui-preview.png](docs/swagger-ui-preview.png)
+[%collapsible%]
+====
+image::docs/swagger-ui-preview.png[swagger-ui-preview.png]
 
-</details>
+Generated OpenAPI documentation
 
-<details>
-  <summary>Generated OpenAPI documentation</summary>
-
-```yaml
+[source,yaml]
+----
 openapi: 3.0.1
 info:
   title: OpenAPI definition
@@ -472,5 +445,5 @@ components:
           "username" : "joe",
           "fullName" : "Joe Big"
         }
-```
-</details>
+----
+====

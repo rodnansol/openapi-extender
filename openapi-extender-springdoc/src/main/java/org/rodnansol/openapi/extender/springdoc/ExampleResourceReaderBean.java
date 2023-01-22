@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
 
 /**
  * Resource reader bean.
+ *
+ * @author nandorholozsnyak
+ * @since 0.2.0
  */
 public class ExampleResourceReaderBean {
 

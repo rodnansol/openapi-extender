@@ -1,0 +1,84 @@
+= OpenAPI Extender
+ifndef::env-github[]
+:icons: font
+endif::[]
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+:toc:
+:toc-placement!:
+:toclevels: 4
+
+image::banner.png[banner.png]
+[.text-center]
+image:https://img.shields.io/maven-central/v/org.rodnansol/openapi-extender-parent.svg[Maven Central]
+image:https://img.shields.io/badge/License-Apache_2.0-blue.svg[Apache 2.0]
+image:https://img.shields.io/twitter/url/https/twitter.com/rodnansol.svg?style=social&label=Follow%20%40RodnanSol[]
+image:https://dcbadge.vercel.app/api/server/USyh6XUjvP[Discord]
+
+toc::[]
+
+== Motivation
+
+Writing proper OpenAPI documentations are time-consuming, if you really
+want to make sure your clients are understanding the API itself, massive
+amount of summaries and examples should be provided, not mandatory, but
+if you are on the other side of the API, you might be also happier if an
+API documentation is verbose as possible.
+
+== Goals
+
+The goal of this project to make sure that your OpenAPI documentation is
+having enough extra details, that you might not want to write by
+yourself in the documentation, but you would like to use other, earlier
+written resources to fulfil these requirements/needs/gaps in your
+documentation.
+
+Developers are writing unit and integration tests on their projects, and
+a good test could be providing the different input and output values for
+a component. API developers are writing tons of integration tests for
+the different use cases and it happens sometimes that they are not
+giving out these tests, because of course security and privacy rules,
+but some output of these tests could be used to extend the already
+existing API.
+
+== Alternatives
+
+* https://github.com/spring-projects/spring-restdocs[Spring’s REST Docs]
+does something similar, but it is not heavily involved in the OpenAPI
+initiative.
+* https://github.com/ePages-de/restdocs-api-spec[Spring REST Docs API
+specification Integration] kinda the wanted features, but it is totally
+test driven.
+
+== Implementation
+
+The project is split up into multiple modules to make sure the end users
+are not depending on some unnecessary dependencies:
+
+* openapi-extender - Core part, that does the ``heavy-lifting'' that
+works with the OpenAPI model classes
+* openapi-extender-resource-generator - Resource generator module that
+is generating the resource files based on different content
+* openapi-extender-spring-test - Spring Test extension
+* openapi-extender-springdoc - SpringDoc extension
+
+== Usage
+
+Please check the following documentation sections for your requested features
+
+=== <<docs/generated-examples.adoc#generated-examples, Generated examples with tests>>
+
+ifndef::env-github[]
+include::docs/generated-examples.adoc[]
+endif::[]
+
+=== <<docs/extra-summaries.adoc#extra-summaries, Extra summary and description for operations >>
+
+ifndef::env-github[]
+include::docs/extra-summaries.adoc[]
+endif::[]

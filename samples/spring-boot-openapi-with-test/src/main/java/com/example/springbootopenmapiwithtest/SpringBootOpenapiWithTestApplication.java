@@ -3,6 +3,9 @@ package com.example.springbootopenmapiwithtest;
 import org.rodnansol.openapi.extender.springdoc.ApiResponseAndExampleCustomizer;
 import org.rodnansol.openapi.extender.springdoc.ExampleResourceReaderBean;
 import org.rodnansol.openapi.extender.springdoc.OpenApiExampleExtenderCustomizer;
+import org.rodnansol.openapi.extender.springdoc.description.OperationDescriptionConfiguration;
+import org.rodnansol.openapi.extender.springdoc.description.OperationDescriptionCustomizer;
+import org.rodnansol.openapi.extender.springdoc.description.OperationDescriptionLoaderService;
 import org.springdoc.core.customizers.OpenApiCustomiser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -39,6 +42,17 @@ public class SpringBootOpenapiWithTestApplication {
     @Bean
     public OpenApiCustomiser openApiCustomiser() {
         return new OpenApiExampleExtenderCustomizer();
+    }
+
+    @Bean
+    public OperationDescriptionCustomizer operationDescriptionCustomizer() {
+        OperationDescriptionConfiguration configuration = OperationDescriptionConfiguration.builder()
+            .resourcesBasePath("operations")
+            .extension(".md")
+            .build();
+        OperationDescriptionCustomizer operations = new OperationDescriptionCustomizer(configuration, new OperationDescriptionLoaderService());
+        operations.setInBackground(true);
+        return operations;
     }
 
 }
