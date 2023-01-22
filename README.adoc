@@ -73,8 +73,12 @@ Please check the following documentation sections for your requested features
 
 === <<docs/generated-examples.adoc#generated-examples, Generated examples with tests>>
 
+ifndef::env-github[]
 include::docs/generated-examples.adoc[]
+endif::[]
 
 === <<docs/extra-summaries.adoc#extra-summaries, Extra summary and description for operations >>
 
+ifndef::env-github[]
 include::docs/extra-summaries.adoc[]
+endif::[]
