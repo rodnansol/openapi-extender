@@ -37,7 +37,7 @@ public class OperationDescriptionConfiguration {
     public static final class Builder {
 
         private String resourcesBasePath;
-        private String extension;
+        private String extension = ".md";
 
         private Builder() {
         }
