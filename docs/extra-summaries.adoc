@@ -1,4 +1,16 @@
+ifndef::env-github[]
 :icons: font
+endif::[]
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+:toc:
+:toc-placement!:
+:toclevels: 4
 [#extra-summarie]
 ==== Summaries and descriptions
 
@@ -149,7 +161,7 @@ For example:
 - /operations/getUser-summary.md
 - /operations/postUser/description.md
 
-===== Method name resolves
+===== Method name resolver
 
 This resolver will search resources in the following paths with a ClassLoader.
 
@@ -160,6 +172,10 @@ The different path can be defined within the constructor. For example:
 
 - `/operations/org.rodnansol.user.UserController#getUser-summary.md`
 - `/operations/org.rodnansol.user.UserController/postUser/description.md`
+
+
+.Example project setup for *Operation identifier resolver* and *Method name resolver*
+image::example-project-setup-for-extra-summary.png[]
 
 ===== Custom OpenAPI Extension key
 
