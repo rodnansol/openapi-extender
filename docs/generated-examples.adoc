@@ -223,7 +223,7 @@ paths: - `target/classes/openapi-extender/requests/` -
 
 [%collapsible%]
 ====
-image::docs/swagger-ui-preview.png[swagger-ui-preview.png]
+image::swagger-ui-preview.png[]
 
 Generated OpenAPI documentation
 
